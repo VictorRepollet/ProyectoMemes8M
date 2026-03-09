@@ -1,2 +1,13 @@
-# ProyectoMemes8M
-Este repositorio se centra en el proyecto de memes de 8M de daw1
+# PROYECTO Memes 8M
+
+## Integrantes:
+
+- Nombre 1
+- Nombre 2
+- Nombre 3
+
+## Introducción
+
+## Descripción
+
+
