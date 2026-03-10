@@ -39,7 +39,7 @@ public class JuegoMemesTest {
         new File("datos/realidades.json").createNewFile();
         new File("datos/soluciones.xml").createNewFile();
 
-        boolean resultado = JuegoMemes.comprobarDatos();
+        Boolean resultado = JuegoMemes.comprobarDatos();
 
         assertTrue(resultado);
     }
@@ -52,7 +52,7 @@ public class JuegoMemesTest {
     public void testComprobarDatos_FaltaMemesTxt() {
         new File("datos/memes.txt").delete();
 
-        boolean resultado = JuegoMemes.comprobarDatos();
+        Boolean resultado = JuegoMemes.comprobarDatos();
 
         assertFalse(resultado);
     }
@@ -65,7 +65,7 @@ public class JuegoMemesTest {
     public void testComprobarDatos_FaltaRealidadesJson() {
         new File("datos/realidades.json").delete();
 
-        boolean resultado = JuegoMemes.comprobarDatos();
+        Boolean resultado = JuegoMemes.comprobarDatos();
 
         assertFalse(resultado);
     }
@@ -78,7 +78,7 @@ public class JuegoMemesTest {
     public void testComprobarDatos_FaltaSolucionesXml() {
         new File("datos/soluciones.xml").delete();
 
-        boolean resultado = JuegoMemes.comprobarDatos();
+        Boolean resultado = JuegoMemes.comprobarDatos();
 
         assertFalse(resultado);
     }
@@ -260,7 +260,7 @@ public class JuegoMemesTest {
 
         for (int i = 0; i < 10; i++) {
             usados.clear();
-            int indice = obtenerIndiceAleatorio(lista, usados);
+            Integer indice = obtenerIndiceAleatorio(lista, usados);
             assertTrue(indice >= 0 && indice < lista.size());
         }
     }
@@ -276,7 +276,7 @@ public class JuegoMemesTest {
         usados.add(0);
         usados.add(1);
 
-        int indice = obtenerIndiceAleatorio(lista, usados);
+        Integer indice = obtenerIndiceAleatorio(lista, usados);
 
         assertFalse(usados.subList(0, 2).contains(indice));
     }
@@ -321,7 +321,7 @@ public class JuegoMemesTest {
      */
     private int obtenerIndiceAleatorio(List<MemesRealidades> lista, List<Integer> usados) {
         Random random = new Random();
-        int indice;
+        Integer indice;
         do {
             indice = random.nextInt(lista.size());
         } while (usados.contains(indice));
