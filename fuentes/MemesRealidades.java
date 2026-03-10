@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class MemesRealidades extends Memes {
-    private List<MemesRealidades> listaMemes = new ArrayList<>();
 
     private Long id;
     private String reality;
@@ -15,44 +14,27 @@ public class MemesRealidades extends Memes {
         this.setReality(reality);
         this.setReference(reference);
         this.setUrl(url);
-        listaMemes.add(this);
     }
 
-    public Long getId(){
-        return this.id;
-    }
+    public Long getId(){return this.id;}
 
-    public String getReality(){
-        return this.reality;
-    }
+    public String getReality(){return this.reality;}
 
-    public String getReference(){
-        return this.reference;
-    }
+    public String getReference(){return this.reference;}
 
-    public String getUrl(){
-        return this.url;
-    }
+    public String getUrl(){return this.url;}
 
-    private void setReality(String reality){
-        this.reality = reality;
-    }
+    private void setId(Long id){this.id = id;}
 
-    private void setReference(String reference){
-        this.reference = reference;
-    }
+    private void setReality(String reality){this.reality = reality;}
 
-    private void setUrl(String url){
-        this.url = url;
-    }
+    private void setReference(String reference){this.reference = reference;}
 
-    private void setId(Long id){
-        this.id = id;
-    }
+    private void setUrl(String url){this.url = url;}
 
     @Override
     public String toString(){
-        return "Meme " + this.getId + ": " +
+        return "Meme " + this.getId() + ": " +
         super.getName() + ".\n" + 
         "La realidad es: " + this.getReality() + ".\n" 
         + "Y la referencia que desmiente al bulo: " + this.getReference(); 
