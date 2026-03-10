@@ -1,72 +1,122 @@
 [
   {
-    "id" : 1,
-    "name_meme" : "Las mujeres ganan un 20% menos que los hombres por el mismo trabajo.",
-    "reality" : "La brecha salarial ajustada (mismo puesto, mismas condiciones) es de aproximadamente un 4-5% en España. El 20% es la brecha salarial bruta, que refleja diferencias en sectores, jornadas y puestos, no discriminación directa en el mismo trabajo.",
-    "reference" : "INE — Encuesta de Estructura Salarial (EES)",
-    "url" : "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177025"
+    "id": 1,
+    "name_meme": "Las mujeres ganan un 20% menos que los hombres por el mismo trabajo.",
+    "reality": "La brecha salarial ajustada (mismo puesto, mismas condiciones) es de aproximadamente un 4-5% en España. El 20% es la brecha salarial bruta, que refleja diferencias en sectores, jornadas y puestos, no discriminación directa en el mismo trabajo.",
+    "reference": "INE — Encuesta de Estructura Salarial (EES)",
+    "url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177025",
+    "fake_realities": [
+      "Estudios europeos confirman que la brecha salarial exacta es del 20% incluso en el mismo puesto y condiciones de trabajo.",
+      "En España no existe ninguna diferencia salarial entre hombres y mujeres según los datos del INE de 2023.",
+      "La brecha salarial bruta y ajustada son idénticas, ya que ambas miden exactamente lo mismo."
+    ]
   },
   {
     "id": 2,
     "name_meme": "En España hay más hombres muertos por violencia doméstica que mujeres",
     "reality": "Según datos oficiales, las mujeres representan la gran mayoría de víctimas mortales por violencia de pareja o expareja. En 2023 fueron asesinadas 57 mujeres por sus parejas o exparejas, frente a 14 hombres en contexto de violencia doméstica (no de pareja íntima).",
-    "reference":"Ministerio del Interior — Estadística de Violencia Doméstica y de Género",
-    "url": "https://www.interior.gob.es/opencms/es/servicios-al-ciudadano/estadisticas/seguridad-y-politica-interior/violencia-sobre-la-mujer/"
+    "reference": "Ministerio del Interior — Estadística de Violencia Doméstica y de Género",
+    "url": "https://www.interior.gob.es/opencms/es/servicios-al-ciudadano/estadisticas/seguridad-y-politica-interior/violencia-sobre-la-mujer/",
+    "fake_realities": [
+      "Los datos del Ministerio del Interior muestran que hombres y mujeres son víctimas mortales de violencia doméstica en igual proporción.",
+      "En 2023 fueron asesinados más de 100 hombres por sus parejas, superando ampliamente las cifras femeninas.",
+      "El Ministerio del Interior no distingue entre violencia doméstica y de pareja, por lo que no existen datos comparativos fiables."
+    ]
   },
   {
     "id": 3,
-    "name_meme":"Las denuncias falsas por violencia de género son el 90%",
-    "reality":"El Consejo General del Poder Judicial registra que las denuncias falsas representan menos del 0,01% del total. En 2022 hubo 227 condenas por denuncia falsa sobre un total de más de 166.000 denuncias interpuestas.",
-    "reference":"CGPJ — Estadística de Violencia sobre la Mujer",
-    "url":"https://www.poderjudicial.es/cgpj/es/Temas/Estadistica-Judicial/Estadistica-por-temas/Datos-penales--civiles-y-administrativos/Violencia-domestica-y-Violencia-de-genero/"
+    "name_meme": "Las denuncias falsas por violencia de género son el 90%",
+    "reality": "El Consejo General del Poder Judicial registra que las denuncias falsas representan menos del 0,01% del total. En 2022 hubo 227 condenas por denuncia falsa sobre un total de más de 166.000 denuncias interpuestas.",
+    "reference": "CGPJ — Estadística de Violencia sobre la Mujer",
+    "url": "https://www.poderjudicial.es/cgpj/es/Temas/Estadistica-Judicial/Estadistica-por-temas/Datos-penales--civiles-y-administrativos/Violencia-domestica-y-Violencia-de-genero/",
+    "fake_realities": [
+      "Según el CGPJ, aproximadamente el 45% de las denuncias por violencia de género son archivadas por falta de pruebas, lo que equivale a denuncias falsas.",
+      "No existen estadísticas oficiales sobre denuncias falsas en España, por lo que el dato del 90% no puede ser ni confirmado ni desmentido.",
+      "Los jueces españoles estiman que alrededor del 30% de las denuncias por violencia de género tienen motivaciones económicas o de custodia."
+    ]
   },
   {
     "id": 4,
     "name_meme": "El feminismo quiere que los hombres tengan menos derechos",
     "reality": "La definición oficial recogida por la RAE y la ONU establece que el feminismo es el principio de igualdad de derechos sociales, políticos, económicos y legales entre hombres y mujeres, sin subordinación de ningún sexo.",
     "reference": "ONU Mujeres — ¿Qué es el feminismo?",
-    "url": "https://www.unwomen.org/es/news/stories/2017/9/news-explainer-what-is-feminism"
+    "url": "https://www.unwomen.org/es/news/stories/2017/9/news-explainer-what-is-feminism",
+    "fake_realities": [
+      "La ONU define el feminismo como un movimiento de acción positiva que prioriza los derechos de las mujeres sobre los de los hombres para compensar siglos de desigualdad.",
+      "La RAE recoge que el feminismo es un movimiento social y político que surgió para garantizar que las mujeres tengan más representación que los hombres en los ámbitos públicos.",
+      "Según Naciones Unidas, el feminismo busca una sociedad matriarcal como respuesta histórica al patriarcado dominante."
+    ]
   },
   {
     "id": 5,
     "name_meme": "Las mujeres no quieren trabajar en trabajos duros",
     "reality": "Las mujeres están sobrerrepresentadas en trabajos duros poco valorados como limpieza, cuidados, hostelería o sanidad. Las barreras son estructurales: discriminación en la contratación, brecha salarial en esos sectores y falta de conciliación.",
     "reference": "INE — Encuesta de Población Activa (EPA), módulo sobre conciliación",
-    "url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176918"
+    "url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176918",
+    "fake_realities": [
+      "La EPA confirma que las mujeres prefieren mayoritariamente empleos de oficina y evitan sectores como la construcción o la minería por razones culturales y no estructurales.",
+      "Los estudios del INE demuestran que cuando se eliminan las barreras salariales, las mujeres siguen eligiendo en menor medida trabajos físicamente exigentes.",
+      "En España, las mujeres están subrepresentadas tanto en trabajos duros manuales como en trabajos duros cognitivos de alta responsabilidad."
+    ]
   },
   {
     "id": 6,
     "name_meme": "Si hubiera igualdad, las mujeres pagarían la mitad en las citas",
     "reality": "La igualdad de género se refiere a igualdad de derechos, salarios, oportunidades y protección frente a la violencia, no a normas sociales en las citas. Además, dado que las mujeres ganan de media menos, la desigualdad económica real influye en estas dinámicas.",
     "reference": "Instituto de la Mujer — Glosario para la igualdad",
-    "url": "https://www.inmujeres.gob.es"
+    "url": "https://www.inmujeres.gob.es",
+    "fake_realities": [
+      "El Instituto de la Mujer establece que la igualdad de género implica necesariamente la igualdad en las normas sociales y costumbres, incluyendo el reparto de gastos en citas.",
+      "Según estudios sociológicos europeos, en países con mayor igualdad de género las mujeres pagan menos en citas porque tienen mayor poder de negociación social.",
+      "La ONU recomienda que los países con brecha salarial apliquen descuentos compensatorios a las mujeres en el ámbito privado para corregir la desigualdad estructural."
+    ]
   },
   {
     "id": 7,
     "name_meme": "Las cuotas hacen que contraten a mujeres menos cualificadas",
     "reality": "Los estudios demuestran que las políticas de paridad no reducen la calidad de los candidatos seleccionados. España exige un mínimo del 40% de representación de cada sexo en consejos de administración de grandes empresas, con resultados positivos en rendimiento empresarial.",
     "reference": "Ministerio de Igualdad — Ley Orgánica de Representación Paritaria (LO 2/2024)",
-    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2024-5529"
+    "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2024-5529",
+    "fake_realities": [
+      "La Ley Orgánica de Representación Paritaria obliga a contratar a la candidata mujer siempre que haya empate en méritos, independientemente de la cualificación real.",
+      "Varios informes del Banco de España advierten de que las cuotas de género en consejos de administración han reducido el rendimiento medio de las empresas del IBEX 35.",
+      "La legislación española de cuotas permite excepciones cuando no hay mujeres cualificadas disponibles, reconociendo implícitamente la brecha de talento."
+    ]
   },
   {
     "id": 8,
     "name_meme": "Los hombres se suicidan más porque el sistema abandona a los hombres y protege solo a las mujeres",
     "reality": "Es cierto que los hombres tienen mayor tasa de suicidio consumado, pero la causa es multicausal: modelos de masculinidad que dificultan pedir ayuda, menor búsqueda de atención psicológica y uso de métodos más letales. Esto no es consecuencia de políticas de igualdad, sino de roles de género que el feminismo también critica.",
     "reference": "Instituto Nacional de Estadística — Estadística de Defunciones según causa de muerte",
-    "url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176780"
+    "url": "https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176780",
+    "fake_realities": [
+      "Según el INE, la mayor tasa de suicidio masculino se explica principalmente por la falta de recursos sanitarios destinados a hombres en comparación con los destinados a mujeres.",
+      "Los hombres se suicidan más porque las leyes de violencia de género generan falsas denuncias que destruyen su situación familiar y económica, según informes del CGPJ.",
+      "La OMS establece que la diferencia en tasas de suicidio entre hombres y mujeres se debe exclusivamente a factores biológicos y hormonales, sin relación con factores sociales."
+    ]
   },
   {
     "id": 9,
     "name_meme": "El 8M es un invento del lobby feminista para atacar a la familia",
     "reality": "El Día Internacional de la Mujer fue proclamado oficialmente por la ONU en 1977, con raíces en las huelgas obreras de principios del siglo XX protagonizadas por trabajadoras que reclamaban derechos laborales básicos.",
     "reference": "ONU — Día Internacional de la Mujer",
-    "url": "https://www.un.org/es/observances/womens-day/background"
+    "url": "https://www.un.org/es/observances/womens-day/background",
+    "fake_realities": [
+      "El 8 de marzo fue elegido como Día Internacional de la Mujer en 1995 durante la Conferencia de Pekín, impulsado por organizaciones feministas occidentales.",
+      "La fecha del 8M conmemora un incendio en una fábrica textil de Nueva York en 1908 donde murieron 146 trabajadoras, hecho histórico documentado y verificado.",
+      "El Día Internacional de la Mujer fue creado en 1968 por la Segunda Internacional Socialista como herramienta de propaganda política durante la Guerra Fría."
+    ]
   },
   {
     "id": 10,
     "name_meme": "Ya hay más mujeres en la universidad, la igualdad ya está conseguida",
     "reality": "Aunque las mujeres son mayoría en las universidades españolas (55%), están infrarrepresentadas en carreras STEM, en puestos directivos, en cátedras universitarias y siguen sufriendo brecha salarial al incorporarse al mercado laboral.",
     "reference": "Ministerio de Universidades — Datos y Cifras del Sistema Universitario Español",
-    "url": "https://www.universidad.gob.es/datos-y-cifras-del-sistema-universitario-espanol/"
+    "url": "https://www.universidad.gob.es/datos-y-cifras-del-sistema-universitario-espanol/",
+    "fake_realities": [
+      "Según el Ministerio de Universidades, las mujeres ya representan el 55% del alumnado y también el 52% del profesorado universitario, lo que indica igualdad plena en el ámbito académico.",
+      "Los datos del sistema universitario español muestran que las mujeres están igualmente representadas en carreras STEM desde la implantación del Plan Bolonia en 2010.",
+      "Una vez alcanzada la mayoría universitaria femenina, los estudios del Ministerio confirman que la brecha salarial desaparece progresivamente en las siguientes generaciones."
+    ]
   }
 ]
