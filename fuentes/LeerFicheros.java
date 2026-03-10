@@ -7,8 +7,8 @@ import java.util.*;
 import org.json.*;
 
 public class LeerFicheros {
-    public Map<Long, MemesRealidades> crearEstructuraDeSoluciones() throws Exception {
-        String ruta = "../datos/soluciones.xlm";
+    public static Map<Long, MemesRealidades> crearEstructuraDeSoluciones() throws Exception {
+        String ruta = "../datos/soluciones.xml";
         File ficheroXML = new File(ruta);
 
         DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance(); //Constructores de documentos
@@ -35,7 +35,7 @@ public class LeerFicheros {
 
     }
 
-    public void leerFichero(String ruta) throws Exception {
+    public static List<String> leerFichero(String ruta) throws Exception {
         if (ruta == null){
             throw new NullPointerException("La ruta no puede ser nula.");
         }
@@ -48,13 +48,11 @@ public class LeerFicheros {
         if (contenido.isEmpty()){
             throw new Exception("El fichero esta vacío.");
         }
+        return contenido;
 
-        for (String linea : contenido) {
-            System.out.println(linea);
-        }
     }
 
-    public void escribirPuntuaciones() throws IOException {
+    public static void escribirPuntuaciones() throws IOException {
         Scanner sc = new Scanner(System.in);
         String ruta = "../resultados/resultados.txt";
         Path path = Paths.get(ruta);
@@ -72,15 +70,17 @@ public class LeerFicheros {
         // Posibilidad de usar metodo leerFichero con la ruta de resultado
     }
 
-    public List<MemesRealidades> obtenerMemesPorJson() throws IOException{
+    public static List<MemesRealidades> obtenerMemesPorJson() throws IOException {
         String ruta = "../datos/realidades.json";
         Path path = Paths.get(ruta);
 
-        String contenido = new String (Files.readAllBytes(path));
+        String contenido = new String(Files.readAllBytes(path));
         List<MemesRealidades> listaMemes = new ArrayList<>();
 
         JSONArray arrayJson = new JSONArray(contenido);
+
         for (int i = 0; i < arrayJson.length(); i++) {
+
             JSONObject objetoJSON = arrayJson.getJSONObject(i);
 
             Long id = objetoJSON.getLong("id");
@@ -89,14 +89,32 @@ public class LeerFicheros {
             String reference = objetoJSON.getString("reference");
             String url = objetoJSON.getString("url");
 
-            MemesRealidades meme = new MemesRealidades(id,name,reality,reference,url);
+            JSONArray fakeArray = objetoJSON.getJSONArray("fake_realities");
+            List<String> fakeRealities = new ArrayList<>();
+
+            for (int j = 0; j < fakeArray.length(); j++) {
+                fakeRealities.add(fakeArray.getString(j));
+            }
+
+            MemesRealidades meme = new MemesRealidades(id, name, reality, reference, url, fakeRealities);
+
             listaMemes.add(meme);
         }
 
         return listaMemes;
     }
 
+    public static void main(String[] args) throws Exception {
+        List<MemesRealidades> listaMemes = obtenerMemesPorJson();
+        System.out.println(listaMemes);
 
+        List<String> lista = leerFichero("../datos/memes.txt");
+        System.out.println(lista);
+
+        Map<Long,MemesRealidades> memesPorxml = crearEstructuraDeSoluciones();
+
+        System.out.println(memesPorxml);
+    }
 }
 
 
