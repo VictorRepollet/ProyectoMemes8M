@@ -16,6 +16,11 @@ public class MemesRealidades extends Memes {
         this.setUrl(url);
     }
 
+    public MemesRealidades(String name, String reality) {
+        super(name);
+        this.setReality(reality);
+    }
+
     public Long getId(){return this.id;}
 
     public String getReality(){return this.reality;}
@@ -32,11 +37,4 @@ public class MemesRealidades extends Memes {
 
     private void setUrl(String url){this.url = url;}
 
-    @Override
-    public String toString(){
-        return "Meme " + this.getId() + ": " +
-        super.getName() + ".\n" + 
-        "La realidad es: " + this.getReality() + ".\n" 
-        + "Y la referencia que desmiente al bulo: " + this.getReference(); 
-    }
 }

@@ -2,47 +2,79 @@ import java.io.*;
 import java.nio.file.*;
 import javax.xml.parsers.*;
 
-import netscape.javascript.JSObject;
 import org.w3c.dom.*;
 import java.util.*;
 import org.json.*;
 
 public class LeerFicheros {
-    String ruta = "../datos/soluciones.xlm";
-    String ruta2 = "../datos/memes.txt";
-
-    public void leerXML() throws Exception {
+    public Map<Long, MemesRealidades> crearEstructuraDeSoluciones() throws Exception {
+        String ruta = "../datos/soluciones.xlm";
         File ficheroXML = new File(ruta);
+
         DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance(); //Constructores de documentos
         DocumentBuilder constructor = factoria.newDocumentBuilder();
         Document documento = constructor.parse(ficheroXML);
 
         Element raiz = documento.getDocumentElement();
-        String realidad = raiz.getElementsByTagName("realidad").item(0).getTextContent();
-        Integer id = Integer.valueOf(raiz.getElementsByTagName("id").item(0).getTextContent());
+        NodeList nodosTotalesDeMemes = raiz.getElementsByTagName("meme");
+        Map<Long, MemesRealidades> mapaDeMemes = new HashMap<>();
+
+        for (int i = 0; i < nodosTotalesDeMemes.getLength(); i++) {
+            Element meme = (Element) nodosTotalesDeMemes.item(i);
+
+            Long id = Long.valueOf(meme.getElementsByTagName("id").item(0).getTextContent());
+            String nombre = meme.getElementsByTagName("nombre").item(0).getTextContent();
+            String realidad = meme.getElementsByTagName("realidad").item(0).getTextContent();
+
+            MemesRealidades memeCreadoConXml = new MemesRealidades(nombre, realidad);
+
+            mapaDeMemes.put(id,memeCreadoConXml);
+
+        }
+        return mapaDeMemes;
 
     }
 
-    public void leerTXT () throws IOException {
-        Path path = Paths.get(ruta2);
-        if (!Files.exists(path)) {
-            throw new IOException("El fichero '...' no existe.");
+    public void leerFichero(String ruta) throws Exception {
+        if (ruta == null){
+            throw new NullPointerException("La ruta no puede ser nula.");
         }
-        List<String> memes = Files.readAllLines(path);
+        if (ruta.isEmpty() || ruta.equals(" ")){
+            throw new Exception("No se ha introducido ninguna ruta.");
+        }
+        Path path = Paths.get(ruta);
 
-        String nombreFichero = "memes.txt";
-        try {
-            List<String> lineas = leerFichero('memes.txt');
-            System.out.println("Contenido del fichero:");
-            for (String linea : lineas) {
-                System.out.println(linea);
-            }
-        } catch (IOException e) {
-            System.err.println("Error al leer el fichero: " + e.getMessage());
+        List<String> contenido = Files.readAllLines(path);
+        if (contenido.isEmpty()){
+            throw new Exception("El fichero esta vacío.");
+        }
+
+        for (String linea : contenido) {
+            System.out.println(linea);
         }
     }
-    public List<MemesRealidades> obtenerMemesPorJson() throws Exception{
-        Path path = Paths.get("../datos/realidades.json");
+
+    public void escribirPuntuaciones() throws IOException {
+        Scanner sc = new Scanner(System.in);
+        String ruta = "../resultados/resultados.txt";
+        Path path = Paths.get(ruta);
+
+        System.out.println("Introduce tu nombre y quedara registrado con tu puntuacion.");
+
+        String nombre = sc.nextLine();
+        String textoCompeto = nombre + " - "; //Obtener puntuacion actual, por programar
+
+        sc.close();
+
+        Files.write(path, textoCompeto.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+
+        // Falta comprobar la puntuacion y la posicion del intento/persona
+        // Posibilidad de usar metodo leerFichero con la ruta de resultado
+    }
+
+    public List<MemesRealidades> obtenerMemesPorJson() throws IOException{
+        String ruta = "../datos/realidades.json";
+        Path path = Paths.get(ruta);
 
         String contenido = new String (Files.readAllBytes(path));
         List<MemesRealidades> listaMemes = new ArrayList<>();

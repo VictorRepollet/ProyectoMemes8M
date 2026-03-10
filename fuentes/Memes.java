@@ -13,4 +13,8 @@ public class Memes{
         return this.name;
     }
 
+    public String toString(){
+        return "Meme: " + this.getName();
+    }
+
 }
