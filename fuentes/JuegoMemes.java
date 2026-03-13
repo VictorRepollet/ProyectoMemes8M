@@ -1,9 +1,3 @@
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
 import java.util.*;
 
 /**
@@ -21,108 +15,47 @@ public class JuegoMemes {
      *
      * @param args argumentos de línea de comandos (no se utilizan)
      */
-    public static void main(String[] args) {
-
-        System.out.println("Iniciando comprobación de archivos...\n");
-
-        boolean datosOK = comprobarDatos();
-
-        if(!datosOK){
-            System.out.println("\nFaltan archivos necesarios.");
-            System.out.println("El programa se detiene.");
-            return;
-        }
-
-        comprobarResultados();
-
-        System.out.println("\nTodos los archivos necesarios existen.");
-        System.out.println("El sistema puede iniciar correctamente.");
-
-        // HU3 y HU4: cargar datos
-        LeerFicheros gestor = new LeerFicheros();
-        List<MemesRealidades> listaMemes = new ArrayList<>();
-
-        try {
-            listaMemes = gestor.obtenerMemesPorJson();
-        } catch (Exception e) {
-            System.out.println("Error al leer los datos: " + e.getMessage());
-            return;
-        }
-
-        // HU5
-        List<Integer> memesUsados = new ArrayList<>();
-        mostrarMemeYRealidades(listaMemes, memesUsados);
+     public static void main(String[] args) {
+        start();
     }
-
 
     /**
-     * HU1
-     * Comprueba si existen los ficheros necesarios para ejecutar la aplicación:
-     * memes.txt, realidades.json y soluciones.xml en el directorio datos.
-     *
-     * @return true si todos los ficheros existen, false si falta alguno
+     * Método que ejecuta el programa completo.
      */
-    public static boolean comprobarDatos(){
+   public static void start() {
 
-        boolean todoExiste = true;
+    System.out.println("================================");
+    System.out.println("         JUEGO MEMES 8M");
+    System.out.println("================================");
 
-        File memes = new File("datos/memes.txt");
-        File realidades = new File("datos/realidades.json");
-        File soluciones = new File("datos/soluciones.xml");
+    System.out.println("\nIniciando comprobación de archivos...\n");
 
-        if(memes.exists()){
-            System.out.println("memes.txt encontrado");
-        } else {
-            System.out.println("memes.txt NO encontrado");
-            todoExiste = false;
-        }
+    boolean datosOK = ComprobadorFicheros.comprobarDatos();
 
-        if(realidades.exists()){
-            System.out.println("realidades.json encontrado");
-        } else {
-            System.out.println("realidades.json NO encontrado");
-            todoExiste = false;
-        }
+    if(!datosOK){
+        System.out.println("\nFaltan archivos necesarios.");
+        System.out.println("El programa se detiene.");
+        return;
+    }
+    ComprobadorFicheros.comprobarResultados();
+    System.out.println("\nTodos los archivos necesarios existen.");
+    System.out.println("El sistema puede iniciar correctamente.");
+    // HU3 y HU4: cargar datos
+    LeerFicheros gestor = new LeerFicheros();
+    List<MemesRealidades> listaMemes = new ArrayList<>();
 
-        if(soluciones.exists()){
-            System.out.println("soluciones.xml encontrado");
-        } else {
-            System.out.println("soluciones.xml NO encontrado");
-            todoExiste = false;
-        }
-
-        return todoExiste;
+    try {
+        listaMemes = gestor.obtenerMemesPorJson();
+    } catch (Exception e) {
+        System.out.println("Error al leer los datos: " + e.getMessage());
+        return;
     }
 
+    // HU5
+    List<Integer> memesUsados = new ArrayList<>();
+    mostrarMemeYRealidades(listaMemes, memesUsados);
+}
 
-    /**
-     * HU2
-     * Comprueba si existe el directorio resultados y el fichero resultados.txt.
-     * Si no existen, los crea automáticamente.
-     */
-    public static void comprobarResultados(){
-
-        File carpeta = new File("resultados");
-
-        if(!carpeta.exists()){
-            System.out.println("\nCarpeta resultados no existe. Creándola...");
-            carpeta.mkdir();
-        }
-
-        File archivo = new File("resultados/resultados.txt");
-
-        if(archivo.exists()){
-            System.out.println("resultados.txt ya existe");
-        } else {
-            try{
-                archivo.createNewFile();
-                System.out.println("resultados.txt creado correctamente");
-            }
-            catch(IOException e){
-                System.out.println("Error al crear resultados.txt");
-            }
-        }
-    }
 
 
     /**
@@ -133,47 +66,47 @@ public class JuegoMemes {
      * @param listaMemes  lista con todos los memes cargados del fichero JSON
      * @param memesUsados lista de índices de memes que ya han sido mostrados
      */
-    public static void mostrarMemeYRealidades(List<MemesRealidades> listaMemes, List<Integer> memesUsados) {
+ public static int mostrarMemeYRealidades(List<MemesRealidades> listaMemes, List<Integer> memesUsados) {
 
-      Random random = new Random();
-      Integer indice;
-      do {
-        indice = random.nextInt(listaMemes.size());
-      } while(memesUsados.contains(indice));
-      memesUsados.add(indice);
+        Random random = new Random();
+        int indice;
+        do {
+            indice = random.nextInt(listaMemes.size());
+        } while(memesUsados.contains(indice));
+        memesUsados.add(indice);
 
-      MemesRealidades memeElegido = listaMemes.get(indice);
+        MemesRealidades memeElegido = listaMemes.get(indice);
 
-      System.out.println("\nMEME: " + memeElegido.getName() + "\n");
-      System.out.println("¿Qué realidad desmiente este meme?\n");
+        System.out.println("\nMEME: " + memeElegido.getName() + "\n");
+        System.out.println("¿Qué realidad desmiente este meme?\n");
 
       //Crear lista de opciones con Strings directamente
-      List<String> opciones = new ArrayList<>();
-      opciones.add(memeElegido.getReality()); //Opcion correcta
+        List<String> opciones = new ArrayList<>();
+        opciones.add(memeElegido.getReality()); //Opcion correcta
 
       //Añadimos las fake_realities
-      List<String> fakes = new ArrayList<>(memeElegido.getFakeRealities());
-      Collections.shuffle(fakes);
-      for(String fake : fakes) {
-        if(opciones.size() < 4) {
-            opciones.add(fake);
+        List<String> fakes = new ArrayList<>(memeElegido.getFakeRealities());
+        Collections.shuffle(fakes);
+
+        for(String fake : fakes){
+            if(opciones.size() < 4) opciones.add(fake);
         }
-      }
 
       //Mezclar todas las opciones
       Collections.shuffle(opciones);
 
       //Mostrar y localizar la correcta
-      Integer respuestaCorrecta = -1;
-      for(int i = 0; i < opciones.size(); i++) {
-        System.out.println((i + 1) + ". " + opciones.get(i));
-        if (opciones.get(i).equals(memeElegido.getReality())) {
-            respuestaCorrecta = i + 1;
-        }
-    }
-    System.out.println();
+    Collections.shuffle(opciones);
 
-    return respuestaCorrecta;
-  
+        int respuestaCorrecta = -1;
+        for(int i = 0; i < opciones.size(); i++){
+            System.out.println((i+1) + ". " + opciones.get(i));
+            if(opciones.get(i).equals(memeElegido.getReality())){
+                respuestaCorrecta = i+1;
+            }
+        }
+        System.out.println();
+
+        return respuestaCorrecta;
     }
 }

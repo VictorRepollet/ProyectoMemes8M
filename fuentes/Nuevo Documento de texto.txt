@@ -1,0 +1,59 @@
+
+    /**
+     * Solicita al usuario su nombre y guarda su puntuación en el fichero
+     * de resultados del juego.
+     *
+     * @throws IOException si ocurre un error al escribir en el fichero
+     */
+    public static void escribirPuntuaciones() throws IOException {
+        Scanner sc = new Scanner(System.in);
+        String ruta = "../resultados/resultados.txt";
+        Path path = Paths.get(ruta);
+
+        System.out.println("Introduce tu nombre y quedara registrado con tu puntuacion.");
+
+        String nombre = sc.nextLine();
+        String textoCompeto = nombre + " - "; //Obtener puntuacion actual, por programar
+
+        sc.close();
+
+        Files.write(path, textoCompeto.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+
+        // Falta comprobar la puntuacion y la posicion del intento/persona
+        // Posibilidad de usar metodo leerFichero con la ruta de resultado
+    }
+
+
+    /**
+     * Lee el fichero XML de soluciones y crea una estructura de datos
+     * que relaciona el identificador del meme con su realidad asociada.
+     *
+     * @return mapa donde la clave es el id del meme y el valor es el objeto MemesRealidades
+     * @throws Exception si ocurre algún error durante el procesamiento del XML
+     */
+    public static Map<Long, MemesRealidades> crearEstructuraDeSoluciones() throws Exception {
+        String ruta = "../datos/soluciones.xml";
+        File ficheroXML = new File(ruta);
+
+        DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance(); //Constructores de documentos
+        DocumentBuilder constructor = factoria.newDocumentBuilder();
+        Document documento = constructor.parse(ficheroXML);
+
+        Element raiz = documento.getDocumentElement();
+        NodeList nodosTotalesDeMemes = raiz.getElementsByTagName("meme");
+        Map<Long, MemesRealidades> mapaDeMemes = new HashMap<>();
+
+        for (int i = 0; i < nodosTotalesDeMemes.getLength(); i++) {
+            Element meme = (Element) nodosTotalesDeMemes.item(i);
+
+            Long id = Long.valueOf(meme.getElementsByTagName("id").item(0).getTextContent());
+            String nombre = meme.getElementsByTagName("nombre").item(0).getTextContent();
+            String realidad = meme.getElementsByTagName("realidad").item(0).getTextContent();
+
+            MemesRealidades memeCreadoConXml = new MemesRealidades(nombre, realidad);
+
+            mapaDeMemes.put(id, memeCreadoConXml);
+        }
+
+        return mapaDeMemes;
+    }
