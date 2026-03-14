@@ -1,8 +1,6 @@
 import java.io.*;
 import java.nio.file.*;
-import javax.xml.parsers.*;
 
-import org.w3c.dom.*;
 import java.util.*;
 import org.json.*;
 
@@ -23,7 +21,7 @@ public class LeerFicheros {
      * @return lista con todas las líneas del fichero
      * @throws Exception si la ruta es inválida o el fichero está vacío
      */
-    public static List<String> leerFichero(String ruta) throws Exception {
+    public List<String> leerFichero(String ruta) throws Exception {
        Path path = Paths.get(ruta);
 
         List<String> contenido = Files.readAllLines(path);
@@ -42,11 +40,11 @@ public class LeerFicheros {
      * @return lista de memes con sus realidades y datos asociados
      * @throws IOException si ocurre un error al leer el fichero JSON
      */
-    public static List<MemesRealidades> obtenerMemesPorJson() throws IOException {
+    public List<MemesRealidades> obtenerMemesPorJson() throws IOException {
         String ruta = "../datos/realidades.json";
         Path path = Paths.get(ruta);
 
-        String contenido = new String(Files.readAllBytes(path));
+        String contenido = new String(Files.readAllBytes(path)).trim();
         List<MemesRealidades> listaMemes = new ArrayList<>();
 
         JSONArray arrayJson = new JSONArray(contenido);

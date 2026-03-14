@@ -2,18 +2,19 @@ import org.junit.jupiter.api.*;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
-class ComprobadorFicherosTest {
+public class ComprobadorFicherosTest {
 
-    private static final String DATOS_DIR = "datos";
-    private static final String RESULTADOS_DIR = "resultados";
-    private static final String MEMES_FILE = "datos/memes.txt";
-    private static final String REALIDADES_FILE = "datos/realidades.json";
-    private static final String SOLUCIONES_FILE = "datos/soluciones.xml";
-    private static final String RESULTADOS_FILE = "resultados/resultados.txt";
+    private static ComprobadorFicheros comp = new ComprobadorFicheros();
+
+    private static final String DATOS_DIR = "../datos";
+    private static final String RESULTADOS_DIR = "../resultados";
+    private static final String MEMES_FILE = "../datos/memes.txt";
+    private static final String REALIDADES_FILE = "../datos/realidades.json";
+    private static final String SOLUCIONES_FILE = "../datos/soluciones.xml";
+    private static final String RESULTADOS_FILE = "../resultados/resultados.txt";
 
     @BeforeEach
     void setUp() {
-        limpiarDirectorios();
         crearDirectoriosDatos();
     }
 
@@ -33,7 +34,7 @@ class ComprobadorFicherosTest {
      */
     @Test
     void testComprobarDatos_TodosExisten() {
-        assertTrue(ComprobadorFicheros.comprobarDatos(), 
+        assertTrue(comp.comprobarDatos(),
             "Debe retornar true cuando todos los archivos existen");
     }
 
@@ -43,7 +44,7 @@ class ComprobadorFicherosTest {
     @Test
     void testComprobarDatos_FaltaMemes() {
         new File(MEMES_FILE).delete();
-        assertFalse(ComprobadorFicheros.comprobarDatos(), 
+        assertFalse(comp.comprobarDatos(),
             "Debe retornar false cuando falta memes.txt");
     }
 
@@ -53,7 +54,7 @@ class ComprobadorFicherosTest {
     @Test
     void testComprobarDatos_FaltaRealidades() {
         new File(REALIDADES_FILE).delete();
-        assertFalse(ComprobadorFicheros.comprobarDatos(), 
+        assertFalse(comp.comprobarDatos(),
             "Debe retornar false cuando falta realidades.json");
     }
 
@@ -63,7 +64,7 @@ class ComprobadorFicherosTest {
     @Test
     void testComprobarDatos_FaltaSoluciones() {
         new File(SOLUCIONES_FILE).delete();
-        assertFalse(ComprobadorFicheros.comprobarDatos(), 
+        assertFalse(comp.comprobarDatos(),
             "Debe retornar false cuando falta soluciones.xml");
     }
 
@@ -83,7 +84,7 @@ class ComprobadorFicherosTest {
         }
 
         // Ejecutar método
-        ComprobadorFicheros.comprobarResultados();
+        comp.comprobarResultados();
 
         // Verificar que se crearon
         assertTrue(carpeta.exists(), "Debe crear la carpeta resultados");
@@ -109,30 +110,10 @@ class ComprobadorFicherosTest {
         }
 
         // Ejecutar método
-        ComprobadorFicheros.comprobarResultados();
+        comp.comprobarResultados();
 
         // Verificar que todavía existen
         assertTrue(carpeta.exists());
         assertTrue(archivo.exists());
-    }
-
-    @AfterEach
-    void tearDown() {
-        limpiarDirectorios();
-    }
-
-    private void limpiarDirectorios() {
-        // Limpiar datos
-        new File(MEMES_FILE).delete();
-        new File(REALIDADES_FILE).delete();
-        new File(SOLUCIONES_FILE).delete();
-        File datosDir = new File(DATOS_DIR);
-        if(datosDir.exists()) datosDir.delete();
-
-        // Limpiar resultados
-        File archivoResultados = new File(RESULTADOS_FILE);
-        if(archivoResultados.exists()) archivoResultados.delete();
-        File resultadosDir = new File(RESULTADOS_DIR);
-        if(resultadosDir.exists()) resultadosDir.delete();
     }
 }
