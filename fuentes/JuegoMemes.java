@@ -23,6 +23,7 @@ public class JuegoMemes {
      * Método que ejecuta el programa completo.
      */
    public static void start() {
+       ComprobadorFicheros comp = new ComprobadorFicheros();
 
     System.out.println("================================");
     System.out.println("         JUEGO MEMES 8M");
@@ -30,14 +31,14 @@ public class JuegoMemes {
 
     System.out.println("\nIniciando comprobación de archivos...\n");
 
-    boolean datosOK = ComprobadorFicheros.comprobarDatos();
+    boolean datosOK = comp.comprobarDatos();
 
     if(!datosOK){
         System.out.println("\nFaltan archivos necesarios.");
         System.out.println("El programa se detiene.");
         return;
     }
-    ComprobadorFicheros.comprobarResultados();
+    comp.comprobarResultados();
     System.out.println("\nTodos los archivos necesarios existen.");
     System.out.println("El sistema puede iniciar correctamente.");
     // HU3 y HU4: cargar datos

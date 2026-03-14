@@ -21,15 +21,15 @@ public class ComprobadorFicheros {
      *
      * @return true si todos los ficheros existen, false si falta alguno
      */
-    public static boolean comprobarDatos(){
+    public boolean comprobarDatos(){
 
         // Variable que indica si todos los archivos existen
         boolean todoExiste = true;
 
         // Referencias a los archivos que deben existir en la carpeta datos
-        File memes = new File("datos/memes.txt");
-        File realidades = new File("datos/realidades.json");
-        File soluciones = new File("datos/soluciones.xml");
+        File memes = new File("../datos/memes.txt");
+        File realidades = new File("../datos/realidades.json");
+        File soluciones = new File("../datos/soluciones.xml");
 
         // Comprobación del archivo memes.txt
         if(memes.exists()){
@@ -65,10 +65,10 @@ public class ComprobadorFicheros {
      * Comprueba si existe el directorio resultados y el fichero resultados.txt.
      * Si no existen, los crea automáticamente.
      */
-    public static void comprobarResultados(){
+    public void comprobarResultados(){
 
         // Objeto File que representa la carpeta resultados
-        File carpeta = new File("resultados");
+        File carpeta = new File("../resultados");
 
         // Si la carpeta no existe se crea
         if(!carpeta.exists()){
@@ -77,7 +77,7 @@ public class ComprobadorFicheros {
         }
 
         // Referencia al archivo resultados.txt dentro de la carpeta resultados
-        File archivo = new File("resultados/resultados.txt");
+        File archivo = new File(carpeta + "/resultados.txt");
 
         // Si el archivo existe se informa al usuario
         if(archivo.exists()){
