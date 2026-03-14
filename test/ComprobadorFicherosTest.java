@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,25 +13,37 @@ public class ComprobadorFicherosTest {
     private File realidades;
     private File soluciones;
 
+    private File resultadosDir;
+    private File resultadosFile;
+
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
 
         comp = new ComprobadorFicheros();
 
+        // Directorio datos
         datosDir = new File("../datos");
         memes = new File("../datos/memes.txt");
         realidades = new File("../datos/realidades.json");
         soluciones = new File("../datos/soluciones.xml");
+
+        // Directorio resultados
+        resultadosDir = new File("../resultados");
+        resultadosFile = new File("../resultados/resultados.txt");
 
         // Crear directorio datos si no existe
         if (!datosDir.exists()) {
             datosDir.mkdirs();
         }
 
-        // Eliminar posibles archivos previos
+        // Limpiar archivos de datos
         memes.delete();
         realidades.delete();
         soluciones.delete();
+
+        // Limpiar resultados
+        resultadosFile.delete();
+        resultadosDir.delete();
     }
 
     @AfterEach
@@ -41,6 +52,9 @@ public class ComprobadorFicherosTest {
         memes.delete();
         realidades.delete();
         soluciones.delete();
+
+        resultadosFile.delete();
+        resultadosDir.delete();
     }
 
     /**
@@ -125,5 +139,42 @@ public class ComprobadorFicherosTest {
         } catch (Exception e) {
             assertTrue(e.getMessage().contains("datos"));
         }
+    }
+
+    /**
+     * HU2 - Si no existe la carpeta resultados debe crearse
+     */
+    @Test
+    void testCrearCarpetaResultados() {
+
+        comp.comprobarResultados();
+
+        assertTrue(resultadosDir.exists(), "La carpeta resultados debería haberse creado");
+    }
+
+    /**
+     * HU2 - Si no existe resultados.txt debe crearse
+     */
+    @Test
+    void testCrearArchivoResultados() {
+
+        comp.comprobarResultados();
+
+        assertTrue(resultadosFile.exists(), "El archivo resultados.txt debería haberse creado");
+    }
+
+    /**
+     * HU2 - Si la carpeta y el archivo ya existen no debe haber problemas
+     */
+    @Test
+    void testResultadosYaExisten() throws Exception {
+
+        resultadosDir.mkdir();
+        resultadosFile.createNewFile();
+
+        comp.comprobarResultados();
+
+        assertTrue(resultadosDir.exists());
+        assertTrue(resultadosFile.exists());
     }
 }
