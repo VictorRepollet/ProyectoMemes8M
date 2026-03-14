@@ -1,106 +1,129 @@
 import org.junit.jupiter.api.*;
-
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.*;
-import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ComprobadorFicherosTest {
 
-    private static final ComprobadorFicheros comp = new ComprobadorFicheros();
+    private ComprobadorFicheros comp;
 
-    private String originalBaseDir;
-    private Path tempRoot;
+    private File datosDir;
+    private File memes;
+    private File realidades;
+    private File soluciones;
 
     @BeforeEach
     void setUp() throws IOException {
-        // Evitar que los tests modifiquen el proyecto: trabajar en un directorio temporal
-        originalBaseDir = System.getProperty("comprobadorficheros.baseDir");
-        tempRoot = Files.createTempDirectory("comprobadorficheros-test-");
-        System.setProperty("comprobadorficheros.baseDir", tempRoot.toString());
+
+        comp = new ComprobadorFicheros();
+
+        datosDir = new File("../datos");
+        memes = new File("../datos/memes.txt");
+        realidades = new File("../datos/realidades.json");
+        soluciones = new File("../datos/soluciones.xml");
+
+        // Crear directorio datos si no existe
+        if (!datosDir.exists()) {
+            datosDir.mkdirs();
+        }
+
+        // Eliminar posibles archivos previos
+        memes.delete();
+        realidades.delete();
+        soluciones.delete();
     }
 
     @AfterEach
-    void tearDown() throws IOException {
-        if (originalBaseDir != null) {
-            System.setProperty("comprobadorficheros.baseDir", originalBaseDir);
-        } else {
-            System.clearProperty("comprobadorficheros.baseDir");
-        }
+    void tearDown() {
 
-        if (tempRoot != null && Files.exists(tempRoot)) {
-            deleteRecursively(tempRoot);
-        }
+        memes.delete();
+        realidades.delete();
+        soluciones.delete();
     }
 
-    private void deleteRecursively(Path path) throws IOException {
-        if (Files.notExists(path)) {
-            return;
-        }
-        Files.walk(path)
-                .sorted(Comparator.reverseOrder())
-                .forEach(p -> {
-                    try {
-                        Files.deleteIfExists(p);
-                    } catch (IOException ignore) {
-                        // Ignorar errores de limpieza de tests
-                    }
-                });
-    }
+    /**
+     * HU1 - Cuando todos los archivos existen no debe lanzar excepción
+     */
+    @Test
+    void testTodosLosArchivosExisten() throws Exception {
 
-    private void createDatosFiles(boolean memes, boolean realidades, boolean soluciones) throws IOException {
-        Path datosDir = tempRoot.resolve("datos");
-        Files.createDirectories(datosDir);
-        if (memes) {
-            Files.createFile(datosDir.resolve("memes.txt"));
-        }
-        if (realidades) {
-            Files.createFile(datosDir.resolve("realidades.json"));
-        }
-        if (soluciones) {
-            Files.createFile(datosDir.resolve("soluciones.xml"));
+        memes.createNewFile();
+        realidades.createNewFile();
+        soluciones.createNewFile();
+
+        try {
+            comp.comprobarDatos();
+        } catch (Exception e) {
+            fail("No debería lanzar excepción cuando todos los archivos existen");
         }
     }
 
     /**
-     * HU1 - Test: cuando todos los archivos existen debe retornar true
+     * HU1 - Cuando falta memes.txt debe lanzar FileNotFoundException
      */
     @Test
-    void testComprobarDatos_TodosExisten() throws IOException {
-        createDatosFiles(true, true, true);
-        assertTrue(comp.comprobarDatos(),
-                "Debe retornar true cuando todos los archivos existen");
+    void testFaltaMemes() throws Exception {
+
+        realidades.createNewFile();
+        soluciones.createNewFile();
+
+        try {
+            comp.comprobarDatos();
+            fail("Debería lanzar excepción porque falta memes.txt");
+        } catch (FileNotFoundException e) {
+            assertTrue(e.getMessage().contains("memes.txt"));
+        }
     }
 
     /**
-     * HU1 - Test: cuando falta memes.txt debe retornar false
+     * HU1 - Cuando falta realidades.json debe lanzar FileNotFoundException
      */
     @Test
-    void testComprobarDatos_FaltaMemes() throws IOException {
-        createDatosFiles(false, true, true);
-        assertFalse(comp.comprobarDatos(),
-                "Debe retornar false cuando falta memes.txt");
+    void testFaltaRealidades() throws Exception {
+
+        memes.createNewFile();
+        soluciones.createNewFile();
+
+        try {
+            comp.comprobarDatos();
+            fail("Debería lanzar excepción porque falta realidades.json");
+        } catch (FileNotFoundException e) {
+            assertTrue(e.getMessage().contains("realidades.json"));
+        }
     }
 
     /**
-     * HU1 - Test: cuando falta realidades.json debe retornar false
+     * HU1 - Cuando falta soluciones.xml debe lanzar FileNotFoundException
      */
     @Test
-    void testComprobarDatos_FaltaRealidades() throws IOException {
-        createDatosFiles(true, false, true);
-        assertFalse(comp.comprobarDatos(),
-                "Debe retornar false cuando falta realidades.json");
+    void testFaltaSoluciones() throws Exception {
+
+        memes.createNewFile();
+        realidades.createNewFile();
+
+        try {
+            comp.comprobarDatos();
+            fail("Debería lanzar excepción porque falta soluciones.xml");
+        } catch (FileNotFoundException e) {
+            assertTrue(e.getMessage().contains("soluciones.xml"));
+        }
     }
 
     /**
-     * HU1 - Test: cuando falta soluciones.xml debe retornar false
+     * HU1 - Cuando no existe el directorio datos debe lanzar excepción
      */
     @Test
-    void testComprobarDatos_FaltaSoluciones() throws IOException {
-        createDatosFiles(true, true, false);
-        assertFalse(comp.comprobarDatos(),
-                "Debe retornar false cuando falta soluciones.xml");
+    void testNoExisteDirectorioDatos() {
+
+        datosDir.delete();
+
+        try {
+            comp.comprobarDatos();
+            fail("Debería lanzar excepción porque no existe el directorio datos");
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains("datos"));
+        }
     }
 }
