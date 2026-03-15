@@ -1,13 +1,21 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * Clase encargada de comprobar la existencia de archivos
- * y crear los necesarios para el funcionamiento del programa.
+ * Clase encargada de verificar la existencia de los recursos necesarios
+ * para el correcto funcionamiento de la aplicación.
  *
- * Esta clase contiene métodos estáticos que verifican la presencia
- * de los archivos requeridos por la aplicación y crean los recursos
- * necesarios en caso de que no existan.
+ * Comprueba que el directorio <code>datos</code> exista y que dentro de él
+ * se encuentren los ficheros requeridos por el programa:
+ * <ul>
+ *     <li>memes.txt</li>
+ *     <li>realidades.json</li>
+ *     <li>soluciones.xml</li>
+ * </ul>
+ *
+ * En caso de que alguno de estos recursos no exista, se lanzará una excepción
+ * indicando cuál es el elemento faltante.
  *
  * @author Victor, Alejandro, Javier
  * @version 1.0
@@ -15,60 +23,58 @@ import java.io.IOException;
 public class ComprobadorFicheros {
 
     /**
-     * HU1
-     * Comprueba si existen los ficheros necesarios para ejecutar la aplicación:
-     * memes.txt, realidades.json y soluciones.xml en el directorio datos.
+     * HU1 - Verificación de archivos necesarios.
      *
-     * @return true si todos los ficheros existen, false si falta alguno
+     * Este método comprueba que exista el directorio <code>datos</code> y que
+     * dentro de él se encuentren los ficheros necesarios para la ejecución
+     * de la aplicación.
+     *
+     * Si el directorio o alguno de los ficheros no existe, se lanza una
+     * excepción {@link FileNotFoundException} indicando qué recurso falta.
+     *
+     * @throws Exception si el directorio <code>datos</code> o alguno de los
+     *                   archivos requeridos no se encuentra en la ruta esperada
      */
-    public static boolean comprobarDatos(){
+    public void comprobarDatos() throws Exception {
 
-        // Variable que indica si todos los archivos existen
-        boolean todoExiste = true;
+        // Referencia al directorio datos
+        File directorioDatos = new File("../datos");
 
         // Referencias a los archivos que deben existir en la carpeta datos
-        File memes = new File("datos/memes.txt");
-        File realidades = new File("datos/realidades.json");
-        File soluciones = new File("datos/soluciones.xml");
+        File memes = new File("../datos/memes.txt");
+        File realidades = new File("../datos/realidades.json");
+        File soluciones = new File("../datos/soluciones.xml");
+
+        // Comprobación del directorio datos
+        if (!directorioDatos.exists() || !directorioDatos.isDirectory()) {
+            throw new FileNotFoundException("No se encontro el directorio \"datos/\".");
+        }
 
         // Comprobación del archivo memes.txt
-        if(memes.exists()){
-            System.out.println("memes.txt encontrado");
-        } else {
-            System.out.println("memes.txt NO encontrado");
-            todoExiste = false;
+        if (!memes.exists()) {
+            throw new FileNotFoundException("No se encontro el fichero \"memes.txt\".");
         }
 
         // Comprobación del archivo realidades.json
-        if(realidades.exists()){
-            System.out.println("realidades.json encontrado");
-        } else {
-            System.out.println("realidades.json NO encontrado");
-            todoExiste = false;
+        if (!realidades.exists()) {
+            throw new FileNotFoundException("No se encontro el fichero \"realidades.json\".");
         }
 
         // Comprobación del archivo soluciones.xml
-        if(soluciones.exists()){
-            System.out.println("soluciones.xml encontrado");
-        } else {
-            System.out.println("soluciones.xml NO encontrado");
-            todoExiste = false;
+        if (!soluciones.exists()) {
+            throw new FileNotFoundException("No se encontro el fichero \"soluciones.xml\".");
         }
-
-        // Devuelve el resultado final de la comprobación
-        return todoExiste;
     }
-
 
     /**
      * HU2
      * Comprueba si existe el directorio resultados y el fichero resultados.txt.
      * Si no existen, los crea automáticamente.
      */
-    public static void comprobarResultados(){
+    public void comprobarResultados(){
 
         // Objeto File que representa la carpeta resultados
-        File carpeta = new File("resultados");
+        File carpeta = new File("../resultados");
 
         // Si la carpeta no existe se crea
         if(!carpeta.exists()){
@@ -77,12 +83,10 @@ public class ComprobadorFicheros {
         }
 
         // Referencia al archivo resultados.txt dentro de la carpeta resultados
-        File archivo = new File("resultados/resultados.txt");
+        File archivo = new File(carpeta + "/resultados.txt");
 
         // Si el archivo existe se informa al usuario
-        if(archivo.exists()){
-            System.out.println("resultados.txt ya existe");
-        } else {
+        if(!archivo.exists()){
             try{
                 // Se crea el archivo si no existe
                 archivo.createNewFile();
@@ -92,6 +96,9 @@ public class ComprobadorFicheros {
                 // Manejo de error si ocurre un problema al crear el archivo
                 System.out.println("Error al crear resultados.txt");
             }
+        } else {
+            System.out.println("resultados.txt ya existe");
+
         }
     }
 }
