@@ -3,7 +3,7 @@
 |				Victor ,															|
 |				Alejandro,															|
 |	Proyecto	Memes 8M															|
-|	Objetivo	Con la llegada del 8M (Dia internacional de la mujer trabagadora)	|
+|	Objetivo	Con la llegada del 8M (Dia internacional de la mujer trabajadora)	|
 |				se nos ha otorgado el objetivo de reunir y refutar memes 			|
 |				, los cuales son conotaciones negativas populares basadas 			|
 |				en prejuicios y bulos.												|
@@ -20,7 +20,7 @@ estructura de datos
 	|->datos
 	|  |->memes.txt
 	|  |->realidades.json
-	|  |->soluciones.xlm
+	|  |->soluciones.xml
 	|
 	|->resultados
 	|  |->resultados.txt
@@ -34,5 +34,5 @@ estructura de datos
 	|
 	|->Herramientas.txt (Desarroyador)
 	|
-	|->jdk(Desarroyador)
+	|->jdk(Desarrollador)
 	|_______________________________________________________
