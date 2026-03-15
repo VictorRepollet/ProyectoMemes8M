@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.*;
 
 import java.util.*;
+import org.json.*;
 
 /**
  * Clase encargada de leer los distintos ficheros de datos utilizados
@@ -30,6 +31,47 @@ public class LeerFicheros {
         }
 
         return contenido;
+    }
+
+    /**
+     * Lee el fichero JSON que contiene información sobre memes
+     * y genera una lista de objetos MemesRealidades.
+     *
+     * @return lista de memes con sus realidades y datos asociados
+     * @throws IOException si ocurre un error al leer el fichero JSON
+     */
+    public List<MemesRealidades> obtenerMemesPorJson() throws IOException {
+        String ruta = "datos/realidades.json";
+        Path path = Paths.get(ruta);
+
+        String contenido = new String(Files.readAllBytes(path)).trim();
+        List<MemesRealidades> listaMemes = new ArrayList<>();
+
+        JSONArray arrayJson = new JSONArray(contenido);
+
+        for (int i = 0; i < arrayJson.length(); i++) {
+
+            JSONObject objetoJSON = arrayJson.getJSONObject(i);
+
+            Long id = objetoJSON.getLong("id");
+            String name = objetoJSON.getString("name_meme");
+            String reality = objetoJSON.getString("reality");
+            String reference = objetoJSON.getString("reference");
+            String url = objetoJSON.getString("url");
+
+            JSONArray fakeArray = objetoJSON.getJSONArray("fake_realities");
+            List<String> fakeRealities = new ArrayList<>();
+
+            for (int j = 0; j < fakeArray.length(); j++) {
+                fakeRealities.add(fakeArray.getString(j));
+            }
+
+            MemesRealidades meme = new MemesRealidades(id, name, reality, reference, url, fakeRealities);
+
+            listaMemes.add(meme);
+        }
+
+        return listaMemes;
     }
 
 }
