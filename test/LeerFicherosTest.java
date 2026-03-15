@@ -4,6 +4,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.nio.file.*;
 import java.util.*;
 import java.io.*;
+import org.json.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,5 +68,31 @@ public class LeerFicherosTest {
         assertThrows(IOException.class, () -> {
             lector.leerFichero("no_existe.txt");
         });
+    }
+
+    /**
+     * Comprueba que el JSON devuelve una lista
+     */
+    @Test
+    void obtenerMemesPorJsonDevuelveLista() throws Exception {
+
+        LeerFicheros lector = new LeerFicheros();
+
+        List<MemesRealidades> memes = lector.obtenerMemesPorJson();
+
+        assertNotNull(memes);
+    }
+
+    /**
+     * Comprueba que la lista de memes no está vacía
+     */
+    @Test
+    void obtenerMemesPorJsonNoVacio() throws Exception {
+
+        LeerFicheros lector = new LeerFicheros();
+
+        List<MemesRealidades> memes = lector.obtenerMemesPorJson();
+
+        assertFalse(memes.isEmpty());
     }
 }
