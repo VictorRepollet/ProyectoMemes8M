@@ -1,0 +1,22 @@
+========================================
+RUTAS DE EJECUCIÓN - Herramientas
+========================================
+
+COMPILAR FUENTES:
+  ..\..\jdk-25\bin\javac -d compilados fuentes/ComprobadorFicheros.java fuentes/LeerFicheros.java fuentes/Memes.java fuentes/MemesRealidades.java fuentes/JuegoMemes.java
+
+COMPILAR TESTS:
+  ..\..\jdk-25\bin\javac -cp "test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar;compilados" -d compilados test/java/ComprobadorFicherosTest.java
+
+EJECUTAR TESTS:
+  ..\..\jdk-25\bin\java -jar test/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar"
+
+EJECUTAR PROGRAMA PRINCIPAL:
+  ..\..\jdk-25\bin\java -cp compilados JuegoMemes
+
+========================================
+ALTERNATIVAMENTE (desde VS Code):
+========================================
+Presiona: Ctrl+Shift+P
+Escribe: Run Task
+Selecciona: Ejecutar tests
