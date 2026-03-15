@@ -100,9 +100,9 @@ ProyectoMemes8M/
 
 ## 👥 Autores
 
-- **Víctor** – Lectura de ficheros, estructura del proyecto
-- **Alejandro** – Modelos de datos, visualización
-- **Javier** – Comprobación de ficheros, formato de soluciones
+- **Víctor** 
+- **Alejandro**
+- **Javier** 
 
 ---
 
