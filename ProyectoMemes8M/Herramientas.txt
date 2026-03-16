@@ -1,0 +1,30 @@
+========================================
+RUTAS DE EJECUCIÓN - Herramientas
+========================================
+
+COMPILAR FUENTES:
+  javac -d compilados fuentes/*.java
+
+COMPILAR TESTS:
+  javac -cp "test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar;compilados" -d compilados test/*.java
+
+EJECUTAR TESTS:
+  java -jar test/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar"
+
+EJECUTAR PROGRAMA PRINCIPAL:
+  java -cp compilados JuegoMemes
+
+========================================
+ALTERNATIVAMENTE (desde VS Code):
+========================================
+Presiona: Ctrl+Shift+P
+Escribe: Run Task
+Selecciona: Ejecutar tests
+
+========================================
+NOTAS:
+========================================
+- Asegúrate de que Java esté en el PATH.
+- Los JARs de JUnit deben estar en test/.
+- Para ejecutar una clase específica: java -cp compilados NombreClase
+- Para compilar un archivo individual: javac -d compilados fuentes/NombreArchivo.java
