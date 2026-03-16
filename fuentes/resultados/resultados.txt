@@ -1,0 +1,2 @@
+102:0
+..\..\jdk-25\bin\java -cp compilados JuegoMemes:0
