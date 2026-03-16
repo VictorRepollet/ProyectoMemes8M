@@ -138,7 +138,7 @@ public class LeerFicheros {
      * @throws IOException si el fichero no existe o no se puede leer
      */
     public static List<MemesRealidades> obtenerMemesPorJson() throws IOException {
-        String ruta = "../datos/realidades.json";
+        String ruta = "datos/realidades.json";
         Path path = Paths.get(ruta);
 
         String contenido = new String(Files.readAllBytes(path));
