@@ -93,8 +93,8 @@ ProyectoMemes8M/
 | HU6 | Elegir dato real | 🔄 En progreso |
 | HU7 | Mostrar marcador | ⏳ Pendiente |
 | HU8 | Mostrar puntuación final | ⏳ Pendiente |
-| HU9 | Top 3 | ⏳ Pendiente |
-| HU10 | Mostrar mejores puntuaciones | ⏳ Pendiente |
+| HU9 | Top 3 | 🔄 En progreso |
+| HU10 | Mostrar mejores puntuaciones | 🔄 En progreso |
 
 ---
 
