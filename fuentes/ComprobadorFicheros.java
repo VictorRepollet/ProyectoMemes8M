@@ -38,12 +38,12 @@ public class ComprobadorFicheros {
     public void comprobarDatos() throws Exception {
 
         // Referencia al directorio datos
-        File directorioDatos = new File("../datos");
+        File directorioDatos = new File("datos");
 
         // Referencias a los archivos que deben existir en la carpeta datos
-        File memes = new File("../datos/memes.txt");
-        File realidades = new File("../datos/realidades.json");
-        File soluciones = new File("../datos/soluciones.xml");
+        File memes = new File("datos/memes.txt");
+        File realidades = new File("datos/realidades.json");
+        File soluciones = new File("datos/soluciones.xml");
 
         // Comprobación del directorio datos
         if (!directorioDatos.exists() || !directorioDatos.isDirectory()) {
@@ -74,7 +74,7 @@ public class ComprobadorFicheros {
     public void comprobarResultados(){
 
         // Objeto File que representa la carpeta resultados
-        File carpeta = new File("../resultados");
+        File carpeta = new File("resultados");
 
         // Si la carpeta no existe se crea
         if(!carpeta.exists()){
