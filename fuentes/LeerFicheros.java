@@ -34,7 +34,7 @@ public class LeerFicheros {
      * @throws Exception si el fichero no existe, no se puede leer o tiene un formato incorrecto
      */
     public static Map<Long, MemesRealidades> crearEstructuraDeSoluciones() throws Exception {
-        String ruta = "../datos/soluciones.xml";
+        String ruta = "datos/soluciones.xml";
         File ficheroXML = new File(ruta);
 
         DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance(); // Constructores de documentos
@@ -103,7 +103,7 @@ public class LeerFicheros {
      * @throws Exception si ocurre un error al leer o escribir el fichero de resultados
      */
     public static void escribirPuntuaciones(Integer puntuacion, Scanner teclado) throws Exception {
-        String ruta = "../resultados/resultados.txt";
+        String ruta = "resultados/resultados.txt";
         Path path = Paths.get(ruta);
 
         System.out.println("Introduce tu nombre y quedara registrado con tu puntuacion.");
@@ -167,5 +167,109 @@ public class LeerFicheros {
         }
 
         return listaMemes;
+    }
+    /**
+     * HU6 - Ejecuta todas las rondas del juego.
+     *
+     * @param teclado Scanner compartido
+     * @return puntuación total obtenida
+     * @throws IOException si hay error al leer el fichero JSON
+     */
+    public static Integer jugar(Scanner teclado) throws IOException {
+
+        List<MemesRealidades> memes = obtenerMemesPorJson();
+        Collections.shuffle(memes);
+
+        Integer puntuacion = 0;
+
+        // APARTADO DE LA HU7
+
+        System.out.println("¿Cuantas rondas deseas jugar? Introduce un numero de rondas entre 5 y 10.");
+        Integer rondasAJugar = Integer.valueOf(teclado.nextLine());
+
+        while(rondasAJugar < 5 || rondasAJugar > 10){
+            System.out.println("Número de rondas invalido, por favor introduce un valor entre 5 y 10.");
+            rondasAJugar = Integer.valueOf(teclado.nextLine());
+        }
+
+        Integer ronda = 1;
+
+        for (int i = 0; i < rondasAJugar; i++) {
+
+            MemesRealidades meme = memes.get(i);
+
+            System.out.println("\n--- Ronda " + ronda + " ---");
+
+            Boolean acerto = mostrarRonda(meme, teclado);
+
+            if (acerto) {
+                puntuacion++;
+                System.out.println("¡Correcto!");
+                // APARTADO DE LA HU7
+                System.out.println("-------------------------");
+                System.out.println("-     MARCADOR: " + puntuacion +"       -");
+                System.out.println("-------------------------");
+            } else {
+                System.out.println("Incorrecto. La respuesta era: " + meme.getReality());
+                // APARTADO DE LA HU7
+                System.out.println("-------------------------");
+                System.out.println("-     MARCADOR: " + puntuacion +"       -");
+                System.out.println("-------------------------");
+            }
+
+            ronda++;
+        }
+
+        return puntuacion;
+    }
+
+    /**
+     * HU6 - Muestra una ronda: el meme, las opciones mezcladas y recoge la respuesta.
+     *
+     * @param meme    meme de la ronda actual
+     * @param teclado Scanner compartido
+     * @return true si el jugador acertó, false si no
+     */
+    public static boolean mostrarRonda(MemesRealidades meme, Scanner teclado) {
+        List<String> opciones = new ArrayList<>();
+        opciones.add(meme.getReality());
+        opciones.addAll(meme.getFakeRealities());
+        Collections.shuffle(opciones);
+
+        Integer indiceCorrecta = opciones.indexOf(meme.getReality()) + 1;
+
+        System.out.println("\nMEME: " + meme.getName());
+        System.out.println("¿Cuál es la realidad verdadera?\n");
+        for (int i = 0; i < opciones.size(); i++) {
+            System.out.println("  " + (i + 1) + ". " + opciones.get(i));
+        }
+
+        Integer eleccion = pedirEleccion(teclado, opciones.size());
+        return eleccion == indiceCorrecta;
+    }
+
+    /**
+     * HU6 - Solicita una opción válida al jugador, repitiendo si la entrada es incorrecta.
+     *
+     * @param teclado     Scanner compartido
+     * @param numOpciones número total de opciones disponibles
+     * @return número elegido por el jugador (entre 1 y numOpciones)
+     */
+    public static Integer pedirEleccion(Scanner teclado, int numOpciones) {
+        Integer eleccion = -1;
+
+        while (eleccion < 1 || eleccion > numOpciones) {
+            System.out.print("\nElige una opción (1-" + numOpciones + "): ");
+            try {
+                eleccion = Integer.parseInt(teclado.nextLine().trim());
+                if (eleccion < 1 || eleccion > numOpciones) {
+                    System.out.println("Opción no válida. Introduce un número entre 1 y " + numOpciones + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada no válida. Introduce un número.");
+            }
+        }
+
+        return eleccion;
     }
 }

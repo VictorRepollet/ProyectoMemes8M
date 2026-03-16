@@ -4,7 +4,6 @@ import org.junit.jupiter.api.io.TempDir;
 import java.nio.file.*;
 import java.util.*;
 import java.io.*;
-import org.json.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,8 +28,7 @@ public class LeerFicherosTest {
 
         Files.write(fichero, lineas);
 
-        LeerFicheros lector = new LeerFicheros();
-        List<String> resultado = lector.leerFichero(fichero.toString());
+        List<String> resultado = LeerFicheros.leerFichero(fichero.toString());
 
         assertEquals(3, resultado.size());
         assertEquals("hola", resultado.get(0));
@@ -48,10 +46,8 @@ public class LeerFicherosTest {
 
         Files.write(fichero, new ArrayList<>());
 
-        LeerFicheros lector = new LeerFicheros();
-
         Exception e = assertThrows(Exception.class, () -> {
-            lector.leerFichero(fichero.toString());
+            LeerFicheros.leerFichero(fichero.toString());
         });
 
         assertEquals("El fichero esta vacío.", e.getMessage());
@@ -63,11 +59,33 @@ public class LeerFicherosTest {
     @Test
     void leerFicheroRutaInexistente() {
 
-        LeerFicheros lector = new LeerFicheros();
-
         assertThrows(IOException.class, () -> {
-            lector.leerFichero("no_existe.txt");
+            LeerFicheros.leerFichero("no_existe.txt");
         });
+    }
+
+    /**
+     * Comprueba que falla si la ruta es null
+     */
+    @Test
+    void leerFicheroRutaNull() {
+
+        assertThrows(NullPointerException.class, () -> {
+            LeerFicheros.leerFichero(null);
+        });
+    }
+
+    /**
+     * Comprueba que falla si la ruta está vacía
+     */
+    @Test
+    void leerFicheroRutaVacia() {
+
+        Exception e = assertThrows(Exception.class, () -> {
+            LeerFicheros.leerFichero("");
+        });
+
+        assertEquals("No se ha introducido ninguna ruta.", e.getMessage());
     }
 
     /**
@@ -76,9 +94,7 @@ public class LeerFicherosTest {
     @Test
     void obtenerMemesPorJsonDevuelveLista() throws Exception {
 
-        LeerFicheros lector = new LeerFicheros();
-
-        List<MemesRealidades> memes = lector.obtenerMemesPorJson();
+        List<MemesRealidades> memes = LeerFicheros.obtenerMemesPorJson();
 
         assertNotNull(memes);
     }
@@ -89,11 +105,88 @@ public class LeerFicherosTest {
     @Test
     void obtenerMemesPorJsonNoVacio() throws Exception {
 
-        LeerFicheros lector = new LeerFicheros();
-
-        List<MemesRealidades> memes = lector.obtenerMemesPorJson();
+        List<MemesRealidades> memes = LeerFicheros.obtenerMemesPorJson();
 
         assertFalse(memes.isEmpty());
+    }
+
+    /**
+     * HU6 - Test pedirEleccion con entrada válida
+     */
+    @Test
+    void pedirEleccionValida() {
+
+        Scanner teclado = new Scanner("2\n");
+
+        Integer resultado = LeerFicheros.pedirEleccion(teclado, 4);
+
+        assertEquals(2, resultado);
+    }
+
+    /**
+     * HU6 - Test pedirEleccion con número fuera de rango
+     */
+    @Test
+    void pedirEleccionFueraDeRango() {
+
+        Scanner teclado = new Scanner("7\n3\n");
+
+        Integer resultado = LeerFicheros.pedirEleccion(teclado, 4);
+
+        assertEquals(3, resultado);
+    }
+
+    /**
+     * HU6 - Test pedirEleccion con texto no numérico
+     */
+    @Test
+    void pedirEleccionEntradaNoNumerica() {
+
+        Scanner teclado = new Scanner("hola\n2\n");
+
+        Integer resultado = LeerFicheros.pedirEleccion(teclado, 4);
+
+        assertEquals(2, resultado);
+    }
+
+    /**
+     * HU6 - Test mostrarRonda (solo comprobamos que devuelve un boolean)
+     */
+    @Test
+    void mostrarRondaDevuelveBoolean() {
+
+        List<String> falsas = List.of("Falsa1","Falsa2","Falsa3");
+
+        MemesRealidades meme = new MemesRealidades(
+                1L,
+                "Meme Test",
+                "Realidad Correcta",
+                "Fuente",
+                "url",
+                falsas
+        );
+
+        Scanner teclado = new Scanner("1\n");
+
+        boolean resultado = LeerFicheros.mostrarRonda(meme, teclado);
+
+        assertNotNull(resultado);
+    }
+
+    /**
+     * HU6 - Test escribirPuntuaciones
+     */
+    @Test
+    void escribirPuntuacionesNoLanzaExcepcion() throws Exception {
+
+        Path carpetaResultados = directorioTemporal.resolve("resultados");
+        Files.createDirectories(carpetaResultados);
+
+        Scanner teclado = new Scanner("Victor\n");
+
+        LeerFicheros.escribirPuntuaciones(5, teclado);
+
+        assertTrue(true);
     }
 
     /**
@@ -139,44 +232,33 @@ public class LeerFicherosTest {
         assertEquals(3, lista.size());
     }
 
-
-
     // =========================================================
     // MÉTODOS AUXILIARES
     // =========================================================
 
-    /**
-     * Crea una lista de prueba con 3 objetos MemesRealidades
-     * para ser utilizada en los tests de HU5.
-     *
-     * @return lista con 3 memes de prueba
-     */
     private List<MemesRealidades> crearListaTest() {
         List<String> realidadesFalsas = new ArrayList<>();
         realidadesFalsas.add("1 false");
         realidadesFalsas.add("2 false");
         realidadesFalsas.add("3 false");
+
         List<MemesRealidades> lista = new ArrayList<>();
-        lista.add(new MemesRealidades(1L, "Meme 1", "Realidad 1", "Fuente 1", "http://url1.com",realidadesFalsas));
-        lista.add(new MemesRealidades(2L, "Meme 2", "Realidad 2", "Fuente 2", "http://url2.com",realidadesFalsas));
-        lista.add(new MemesRealidades(3L, "Meme 3", "Realidad 3", "Fuente 3", "http://url3.com",realidadesFalsas));
+
+        lista.add(new MemesRealidades(1L, "Meme 1", "Realidad 1", "Fuente 1", "http://url1.com", realidadesFalsas));
+        lista.add(new MemesRealidades(2L, "Meme 2", "Realidad 2", "Fuente 2", "http://url2.com", realidadesFalsas));
+        lista.add(new MemesRealidades(3L, "Meme 3", "Realidad 3", "Fuente 3", "http://url3.com", realidadesFalsas));
+
         return lista;
     }
 
-    /**
-     * Extrae la lógica de selección aleatoria de un meme
-     * para poder testearla de forma aislada sin depender de la consola.
-     *
-     * @param lista  lista de memes disponibles
-     * @param usados lista de índices ya utilizados
-     * @return índice aleatorio no repetido
-     */
     private int obtenerIndiceAleatorio(List<MemesRealidades> lista, List<Integer> usados) {
         Random random = new Random();
         Integer indice;
+
         do {
             indice = random.nextInt(lista.size());
         } while (usados.contains(indice));
+
         return indice;
     }
 }

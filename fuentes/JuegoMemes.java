@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Clase principal de la aplicación Memes 8M.
@@ -22,7 +22,7 @@ public class JuegoMemes {
      *
      * @param args argumentos de línea de comandos (no utilizados en esta aplicación)
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
         start(teclado);
         teclado.close(); // se cierra aquí, al final de todo
@@ -45,7 +45,7 @@ public class JuegoMemes {
      *
      * @param teclado {@link Scanner} compartido para la lectura de entrada del usuario
      */
-    public static void start(Scanner teclado) {
+    public static void start(Scanner teclado) throws Exception {
 
         System.out.println("================================");
         System.out.println("         JUEGO MEMES 8M");
@@ -62,12 +62,12 @@ public class JuegoMemes {
         }
 
         // 2. Cargar datos
-        // List<MemesRealidades> memes = LeerFicheros.obtenerMemesPorJson();
+        //List<MemesRealidades> memes = LeerFicheros.obtenerMemesPorJson();
         // (descomenta cuando vayas a implementar el juego)
 
-        // 3. Lógica del juego
-        // (aquí irán las HU6, HU7, HU8...)
-        int puntuacion = 0; // provisional hasta que implementes el juego
+        // 3. Lógica del juego(HU6)
+        Integer puntuacion = LeerFicheros.jugar(teclado);
+        // (aquí irán las  HU7, HU8...)
 
         // 4. Guardar puntuación al final
         try {
