@@ -69,12 +69,18 @@ public class JuegoMemes {
         // (aquí irán las HU6, HU7, HU8...)
         int puntuacion = 0; // provisional hasta que implementes el juego
 
-        // 4. Guardar puntuación al final
+         // 4. Guardar puntuación al final
         try {
             LeerFicheros.escribirPuntuaciones(puntuacion, teclado);
         } catch (Exception e) {
             System.out.println("Error al guardar puntuacion: " + e.getMessage());
         }
+        // HU8: Mostrar puntuación final
+        System.out.println("Tu puntuación final es: " + puntuacion);
+
+        // HU9 y HU10: Verificar si entra en top 3 y mostrar mejores puntuaciones
+        PuntuacionesHU9HU10.verificarYRegistrarPuntuacion(puntuacion, teclado);
+        PuntuacionesHU9HU10.mostrarMejoresPuntuacionesYDespedida();
 
         System.out.println("================================");
         System.out.println("       TERMINANDO PROGRAMA.");
