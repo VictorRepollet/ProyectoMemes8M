@@ -1,0 +1,251 @@
+# MANUAL DEL DESARROLLADOR - Juego Memes 8M
+
+## 👨‍💻 Introducción
+
+Este manual está dirigido a desarrolladores que deseen contribuir, mantener o extender el proyecto **Juego Memes 8M**. El proyecto es una aplicación Java de consola que utiliza archivos de datos en formatos TXT, JSON y XML para gestionar un juego educativo sobre memes del 8M.
+
+**Autores:** Javier, Victor, Alejandro  
+**Fecha:** 08/03/2026  
+**Asignatura:** Programación (DAW1)
+
+---
+
+## 🛠️ Configuración del Entorno de Desarrollo
+
+### Requisitos
+
+- **Java JDK 25** o superior
+- **IDE recomendado:** Visual Studio Code, IntelliJ IDEA o Eclipse
+- **Librerías:** 
+  - `json-20251224.jar` para parseo JSON
+  - JUnit 5 para testing (`junit-jupiter-api-5.9.2.jar`, `junit-jupiter-engine-5.9.2.jar`, `junit-platform-console-standalone-1.9.2.jar`, `hamcrest-core-1.3.jar`)
+
+### Instalación
+
+1. **Clona el repositorio:**
+   ```bash
+   git clone https://github.com/VictorRepollet/ProyectoMemes8M.git
+   cd ProyectoMemes8M
+   ```
+
+2. **Verifica dependencias:**
+   - Los JARs deben estar en `lib/`
+   - Archivos de datos en `datos/`
+
+3. **Configura el IDE:**
+   - Añade `lib/json-20251224.jar` al classpath
+   - Para tests, incluye todos los JARs de JUnit
+
+---
+
+## 🗂️ Arquitectura del Proyecto
+
+### Estructura de Directorios
+
+```
+ProyectoMemes8M/
+├── datos/                 # Archivos de datos de entrada
+│   ├── memes.txt          # Lista de memes (formato TXT)
+│   ├── realidades.json    # Realidades y opciones falsas (JSON)
+│   └── soluciones.xml     # Soluciones correctas (XML)
+├── fuentes/               # Código fuente principal
+│   ├── JuegoMemes.java    # Clase principal (main)
+│   ├── ComprobadorFicheros.java  # Verificación de archivos
+│   ├── LeerFicheros.java  # Lectura/escritura de archivos
+│   ├── Memes.java         # Modelo de datos básico
+│   ├── MemesRealidades.java # Modelo extendido
+│   ├── Puntuacion.java    # Modelo de puntuación
+│   └── Puntuaciones.java  # Gestión de rankings
+├── test/                  # Pruebas unitarias
+│   ├── JuegoMemesTest.java
+│   ├── ComprobadorFicherosTest.java
+│   ├── LeerFicherosTest.java
+│   └── PuntuacionesTest.java
+├── lib/                   # Librerías JAR
+├── compilados/            # Archivos .class (generado)
+├── resultados/            # Archivos de salida
+│   └── resultados.txt     # Ranking persistente
+├── documentacion/         # Javadoc generado
+└── [Archivos de documentación]
+```
+
+### Diagrama de Clases
+
+- **JuegoMemes:** Punto de entrada, controla el flujo del juego
+- **ComprobadorFicheros:** Utilidad para verificar existencia de archivos
+- **LeerFicheros:** Maneja I/O de archivos (TXT, JSON, XML)
+- **Memes:** Clase POJO para representar un meme básico
+- **MemesRealidades:** Extiende Memes con realidad y opciones
+- **Puntuacion:** Representa una entrada de puntuación
+- **Puntuaciones:** Gestiona el ranking y persistencia
+
+---
+
+## 🚀 Compilación y Ejecución
+
+### Compilación Básica
+
+```bash
+# Compilar fuentes principales
+javac -cp "lib/json-20251224.jar" -d compilados fuentes/*.java
+
+# Compilar con tests
+javac -cp "lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar;compilados" -d compilados test/*.java
+```
+
+### Ejecución
+
+```bash
+# Ejecutar aplicación principal
+java -cp "compilados;lib/json-20251224.jar" JuegoMemes
+
+# Ejecutar tests
+java -jar lib/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar"
+```
+
+### Scripts Combinados
+
+```bash
+# Compilar y ejecutar en un comando
+javac -cp "lib/json-20251224.jar" -d compilados fuentes/*.java && java -cp "compilados;lib/json-20251224.jar" JuegoMemes
+```
+
+**Nota:** En Linux/Mac, reemplaza `;` por `:` en classpath.
+
+---
+
+## 🧪 Testing
+
+### Framework Utilizado
+
+- **JUnit 5** para pruebas unitarias
+- Cobertura: 61/61 tests pasan
+- Tests ubicados en `test/`
+
+### Ejecutar Tests
+
+```bash
+# Todos los tests
+java -jar lib/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar"
+
+# Test específico
+java -jar lib/junit-platform-console-standalone-1.9.2.jar -cp "compilados;..." --select-class ComprobadorFicherosTest
+```
+
+### Cobertura de Tests
+
+- **ComprobadorFicherosTest:** Verificación de archivos
+- **LeerFicherosTest:** I/O de archivos
+- **PuntuacionesTest:** Gestión de rankings
+- **JuegoMemesTest:** Flujo principal
+
+---
+
+## 📚 Dependencias
+
+### Librerías Externas
+
+| Librería | Versión | Propósito |
+|----------|---------|-----------|
+| org.json | 20251224 | Parseo de JSON |
+| JUnit Jupiter API | 5.9.2 | Framework de testing |
+| JUnit Jupiter Engine | 5.9.2 | Motor de ejecución de tests |
+| JUnit Platform Console | 1.9.2 | Interfaz de consola para JUnit |
+| Hamcrest Core | 1.3 | Matchers para assertions |
+
+### Gestión de Dependencias
+
+- Las librerías están incluidas en `lib/`
+- No se usa Maven/Gradle; gestión manual
+- Para actualizar: Descargar nuevas versiones y reemplazar JARs
+
+---
+
+## 🔧 Desarrollo y Contribución
+
+### Estándares de Código
+
+- **Lenguaje:** Java 11+ (compatible con JDK 25)
+- **Estilo:** CamelCase para métodos/variables, PascalCase para clases
+- **Documentación:** Javadoc en clases públicas y métodos
+- **Testing:** Tests unitarios para toda funcionalidad nueva
+
+### Flujo de Desarrollo
+
+1. **Clona el repositorio**
+2. **Crea una rama** para tu feature: `git checkout -b feature/nueva-funcionalidad`
+3. **Implementa cambios** con tests
+4. **Compila y ejecuta tests** localmente
+5. **Genera Javadoc** si es necesario
+6. **Commit y push** tus cambios
+7. **Crea Pull Request**
+
+### Agregar Nueva Funcionalidad
+
+1. **Identifica la HU** en `Backlog.txt`
+2. **Implementa en la clase correspondiente**
+3. **Añade tests** en `test/`
+4. **Actualiza documentación**
+
+### Generar Documentación
+
+```bash
+# Generar Javadoc
+javadoc -d documentacion -sourcepath fuentes -subpackages "" -cp "lib/json-20251224.jar"
+```
+
+---
+
+## 📊 Historias de Usuario (Backlog)
+
+| ID | Descripción | Estado |
+|----|-------------|--------|
+| HU1 | Comprobar existencia de archivos | ✅ Completada |
+| HU2 | Crear directorio de resultados | ✅ Completada |
+| HU3 | Leer memes.txt | ✅ Completada |
+| HU4 | Leer realidades.json | ✅ Completada |
+| HU5 | Mostrar meme y opciones | ✅ Completada |
+| HU6 | Elegir respuesta correcta | ✅ Completada |
+| HU7 | Mostrar marcador por ronda | ✅ Completada |
+| HU8 | Mostrar puntuación final | ✅ Completada |
+| HU9 | Registrar en top 3 | ✅ Completada |
+| HU10 | Mostrar mejores puntuaciones | ✅ Completada |
+
+---
+
+## 🐛 Debugging y Troubleshooting
+
+### Problemas Comunes
+
+- **Error de classpath:** Verifica rutas a JARs
+- **Archivos no encontrados:** Comprueba estructura de directorios
+- **Tests fallan:** Asegura compilación previa de fuentes
+- **Encoding issues:** Usa UTF-8 para archivos de datos
+
+### Logs y Debugging
+
+- El programa imprime mensajes en consola
+- Para debugging avanzado, usa IDE con breakpoints
+- Tests proporcionan feedback detallado
+
+---
+
+## 📈 Métricas y Calidad
+
+- **Tests:** 61/61 pasan
+- **Cobertura:** Todas las clases principales testeadas
+- **Documentación:** Javadoc completo
+- **Estándares:** Código limpio y legible
+
+---
+
+## 📞 Contacto y Soporte
+
+Para consultas técnicas:
+- Revisa `Herramientas.txt` para comandos detallados
+- Consulta `README.md` para descripción general
+- Los autores: Javier, Victor, Alejandro
+
+**Proyecto académico - DAW1**  
+¡Contribuye a la educación sobre el 8M!</content>
+<parameter name="filePath">d:\final\ProyectoMemes8M\ManualDesarrollador.txt
