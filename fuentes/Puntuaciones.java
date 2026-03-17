@@ -17,8 +17,7 @@ public class Puntuaciones{
      * @param scanner El Scanner para leer entrada del usuario.
      */
     public static void verificarYRegistrarPuntuacion(int puntuacionUsuario, Scanner scanner) {
-        // HU8: Mostrar puntuación final
-        System.out.println("Tu puntuación final es: " + puntuacionUsuario);
+       
 
         // Cargar las mejores puntuaciones actuales
         List<Puntuacion> mejores = cargarMejoresPuntuaciones();

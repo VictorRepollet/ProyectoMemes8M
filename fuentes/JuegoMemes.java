@@ -84,18 +84,4 @@ public class JuegoMemes {
         System.out.println("================================");
     }
 
-    public static boolean comprobarDatos() {
-        try {
-            ComprobadorFicheros comprobador = new ComprobadorFicheros();
-            comprobador.comprobarDatos();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public static void comprobarResultados() {
-        ComprobadorFicheros comprobador = new ComprobadorFicheros();
-        comprobador.comprobarResultados();
-    }
 }
