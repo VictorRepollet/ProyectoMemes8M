@@ -205,7 +205,7 @@ public class JuegoMemesTest {
         new File("datos").mkdirs();
         Files.writeString(Paths.get("datos/memes.txt"), "Meme1\nMeme2\nMeme3");
 
-        List<String> memes = LeerFicheros.leerFichero("datos/memes.txt");
+        List<String> memes = GestorFicheros.leerFichero("datos/memes.txt");
 
         assertFalse(memes.isEmpty());
     }
@@ -219,7 +219,7 @@ public class JuegoMemesTest {
         new File("datos").mkdirs();
         Files.writeString(Paths.get("datos/memes.txt"), "Meme1\nMeme2\nMeme3");
 
-        List<String> memes = LeerFicheros.leerFichero("datos/memes.txt");
+        List<String> memes = GestorFicheros.leerFichero("datos/memes.txt");
 
         assertEquals(3, memes.size());
     }
@@ -232,7 +232,7 @@ public class JuegoMemesTest {
     public void testLeerTXT_FicheroNoExisteLanzaExcepcion() {
         new File("datos/memes.txt").delete();
 
-        assertThrows(Exception.class, () -> LeerFicheros.leerFichero("datos/memes.txt"));
+        assertThrows(Exception.class, () -> GestorFicheros.leerFichero("datos/memes.txt"));
     }
 
 
@@ -252,7 +252,7 @@ public class JuegoMemesTest {
                       "\"fake_realities\":[\"Falsa 1\",\"Falsa 2\"]}]";
         Files.writeString(Paths.get("datos/realidades.json"), json);
 
-        LeerFicheros lector = new LeerFicheros();
+                    GestorFicheros lector = new GestorFicheros();
         List<MemesRealidades> lista = lector.obtenerMemesPorJson();
 
         assertFalse(lista.isEmpty());
@@ -270,7 +270,7 @@ public class JuegoMemesTest {
                       ",\"fake_realities\":[\"Falsa 1\",\"Falsa 2\"]}]";
         Files.writeString(Paths.get("datos/realidades.json"), json);
 
-        LeerFicheros lector = new LeerFicheros();
+        GestorFicheros lector = new GestorFicheros();
         List<MemesRealidades> lista = lector.obtenerMemesPorJson();
 
         assertEquals("Meme test", lista.get(0).getName());
@@ -286,7 +286,7 @@ public class JuegoMemesTest {
         new File("datos").mkdirs();
         Files.writeString(Paths.get("datos/realidades.json"), "[]");
 
-        LeerFicheros lector = new LeerFicheros();
+        GestorFicheros lector = new GestorFicheros();
         List<MemesRealidades> lista = lector.obtenerMemesPorJson();
 
         assertTrue(lista.isEmpty());
@@ -357,7 +357,7 @@ public class JuegoMemesTest {
         String inputSimulado = "1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        Boolean resultado = LeerFicheros.mostrarRonda(meme, teclado);
+        Boolean resultado = GestorFicheros.mostrarRonda(meme, teclado);
 
         assertTrue(resultado);
     }
@@ -371,7 +371,7 @@ public class JuegoMemesTest {
         String inputSimulado = "2\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        Integer resultado = LeerFicheros.pedirEleccion(teclado, 4);
+        Integer resultado = GestorFicheros.pedirEleccion(teclado, 4);
 
         assertEquals(2, resultado);
     }
@@ -386,7 +386,7 @@ public class JuegoMemesTest {
         String inputSimulado = "0\n3\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        Integer resultado = LeerFicheros.pedirEleccion(teclado, 4);
+        Integer resultado = GestorFicheros.pedirEleccion(teclado, 4);
 
         assertEquals(3, resultado);
     }
@@ -401,7 +401,7 @@ public class JuegoMemesTest {
         String inputSimulado = "abc\n1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        Integer resultado = LeerFicheros.pedirEleccion(teclado, 4);
+        Integer resultado = GestorFicheros.pedirEleccion(teclado, 4);
 
         assertEquals(1, resultado);
     }
@@ -421,7 +421,7 @@ public class JuegoMemesTest {
         String inputSimulado = "1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        Boolean resultado = LeerFicheros.mostrarRonda(meme, teclado);
+        Boolean resultado = GestorFicheros.mostrarRonda(meme, teclado);
 
         assertNotNull(resultado);
     }
@@ -441,7 +441,7 @@ public class JuegoMemesTest {
         String inputSimulado = "3\n5\n1\n1\n1\n1\n1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        assertDoesNotThrow(() -> LeerFicheros.jugar(teclado));
+        assertDoesNotThrow(() -> GestorFicheros.jugar(teclado));
     }
 
     /**
@@ -454,7 +454,7 @@ public class JuegoMemesTest {
         String inputSimulado = "15\n5\n1\n1\n1\n1\n1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        assertDoesNotThrow(() -> LeerFicheros.jugar(teclado));
+        assertDoesNotThrow(() -> GestorFicheros.jugar(teclado));
     }
 
     /**
@@ -467,7 +467,7 @@ public class JuegoMemesTest {
         String inputSimulado = "5\n1\n1\n1\n1\n1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        assertDoesNotThrow(() -> LeerFicheros.jugar(teclado));
+        assertDoesNotThrow(() -> GestorFicheros.jugar(teclado));
     }
 
 
@@ -484,7 +484,7 @@ public class JuegoMemesTest {
         String inputSimulado = "5\n1\n1\n1\n1\n1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        Integer puntuacion = LeerFicheros.jugar(teclado);
+        Integer puntuacion = GestorFicheros.jugar(teclado);
 
         assertTrue(puntuacion >= 0);
     }
@@ -498,7 +498,7 @@ public class JuegoMemesTest {
         String inputSimulado = "5\n1\n1\n1\n1\n1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        Integer puntuacion = LeerFicheros.jugar(teclado);
+        Integer puntuacion = GestorFicheros.jugar(teclado);
 
         assertTrue(puntuacion <= 5);
     }
@@ -512,7 +512,7 @@ public class JuegoMemesTest {
         String inputSimulado = "5\n1\n1\n1\n1\n1\n";
         Scanner teclado = new Scanner(new ByteArrayInputStream(inputSimulado.getBytes()));
 
-        Integer puntuacion = LeerFicheros.jugar(teclado);
+        Integer puntuacion = GestorFicheros.jugar(teclado);
 
         assertNotNull(puntuacion);
     }

@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.nio.file.*;
@@ -12,6 +13,24 @@ public class LeerFicherosTest {
 
     @TempDir
     Path directorioTemporal;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        // Crear directorio datos si no existe
+        new File("datos").mkdirs();
+        
+        // Limpiar y crear archivo realidades.json
+        File realidades = new File("datos/realidades.json");
+        realidades.delete();
+        String json = "[" +
+            "{\"id\":1,\"name_meme\":\"Meme1\",\"reality\":\"Realidad1\",\"reference\":\"Fuente1\",\"url\":\"http://url1.com\",\"fake_realities\":[\"Falsa11\",\"Falsa12\",\"Falsa13\"]}," +
+            "{\"id\":2,\"name_meme\":\"Meme2\",\"reality\":\"Realidad2\",\"reference\":\"Fuente2\",\"url\":\"http://url2.com\",\"fake_realities\":[\"Falsa21\",\"Falsa22\",\"Falsa23\"]}," +
+            "{\"id\":3,\"name_meme\":\"Meme3\",\"reality\":\"Realidad3\",\"reference\":\"Fuente3\",\"url\":\"http://url3.com\",\"fake_realities\":[\"Falsa31\",\"Falsa32\",\"Falsa33\"]}," +
+            "{\"id\":4,\"name_meme\":\"Meme4\",\"reality\":\"Realidad4\",\"reference\":\"Fuente4\",\"url\":\"http://url4.com\",\"fake_realities\":[\"Falsa41\",\"Falsa42\",\"Falsa43\"]}," +
+            "{\"id\":5,\"name_meme\":\"Meme5\",\"reality\":\"Realidad5\",\"reference\":\"Fuente5\",\"url\":\"http://url5.com\",\"fake_realities\":[\"Falsa51\",\"Falsa52\",\"Falsa53\"]}" +
+            "]";
+        Files.writeString(realidades.toPath(), json);
+    }
 
     // =========================================================
     // TESTS leerFichero

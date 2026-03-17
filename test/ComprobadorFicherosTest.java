@@ -22,14 +22,14 @@ public class ComprobadorFicherosTest {
         comp = new ComprobadorFicheros();
 
         // Directorio datos
-        datosDir = new File("../datos");
-        memes = new File("../datos/memes.txt");
-        realidades = new File("../datos/realidades.json");
-        soluciones = new File("../datos/soluciones.xml");
+        datosDir = new File("datos");
+        memes = new File("datos/memes.txt");
+        realidades = new File("datos/realidades.json");
+        soluciones = new File("datos/soluciones.xml");
 
         // Directorio resultados
-        resultadosDir = new File("../resultados");
-        resultadosFile = new File("../resultados/resultados.txt");
+        resultadosDir = new File("resultados");
+        resultadosFile = new File("resultados/resultados.txt");
 
         // Crear directorio datos si no existe
         if (!datosDir.exists()) {

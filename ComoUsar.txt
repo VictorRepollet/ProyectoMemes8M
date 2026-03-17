@@ -1,143 +1,107 @@
 /-----------------------------------------------------------------------------------\
-|	Creadores 	Javier, Victor, Alejandro					                    				|
-|	Proyecto	Memes 8M												                             	|
-|	Objetivo	Refutar memes negativos sobre el 8M conociendo la realidad           	|
-|	Fecha		08/03/2026							                        						|
-|	Asignatura	Programación								                     				|
-|	Cliente		Miguel Jaque Barbero									                       	|
+|	Creador 	Javier ,															|
+|				Victor ,															|
+|				Alejandro,															|
+|	Proyecto	Memes 8M															|
+|	Objetivo	Con la llegada del 8M (Dia internacional de la mujer trabajadora)	|
+|				se nos ha otorgado el objetivo de reunir y refutar memes 			|
+|				, los cuales son conotaciones negativas populares basadas 			|
+|				en prejuicios y bulos.												|
+|	Fecha		08/03/2026															|
+|	Asignatura	Programación														|
+|	Cliente		Miguel Jaque Barbero												|
 \-----------------------------------------------------------------------------------/
 
-# MANUAL DE USUARIO - Juego Memes 8M
+INSTRUCCIONES DE USO - Proyecto Memes 8M
+========================================
 
-## 🎭 Introducción
-
-Bienvenido al **Juego Memes 8M**, un proyecto educativo desarrollado para concienciar sobre los prejuicios y bulos relacionados con el Día Internacional de la Mujer Trabajadora (8M). El objetivo es identificar la realidad verdadera detrás de memes populares que perpetúan estereotipos negativos.
-
-En este juego, se te presentarán memes junto con varias opciones de "realidad". Tu tarea es elegir la opción correcta para ganar puntos y contribuir a la desmitificación de estos contenidos.
-
----
-
-## 📋 Requisitos del Sistema
-
-Antes de comenzar, asegúrate de tener instalado:
-
-- **Java JDK 25** o superior (verifica con `java --version`)
-- Los archivos de datos en la carpeta `datos/` deben estar presentes
-- Los archivos JAR de dependencias en `lib/` (incluyendo JSON y JUnit)
-
-**Nota:** Si no tienes Java instalado, descárgalo desde [oracle.com](https://www.oracle.com/java/technologies/javase-downloads.html) o usa OpenJDK.
-
----
-
-## 🗂️ Estructura del Proyecto
-
-```
+ESTRUCTURA DEL PROYECTO:
+========================================
 ProyectoMemes8M/
-├── datos/
-│   ├── memes.txt          # Lista de memes a mostrar
-│   ├── realidades.json    # Datos de realidades en formato JSON
-│   └── soluciones.xml     # Soluciones correctas indexadas
-├── resultados/
-│   └── resultados.txt     # Ranking de puntuaciones guardadas
-├── fuentes/               # Código fuente Java
-├── test/                  # Pruebas unitarias
-├── lib/                   # Librerías JAR (JSON, JUnit)
-├── compilados/            # Archivos compilados (se crea automáticamente)
-├── documentacion/         # Documentación Javadoc
-├── Herramientas.txt       # Comandos técnicos para desarrolladores
-├── README.md              # Información general del proyecto
-└── Backlog.txt            # Historias de usuario
-```
+|
+|-> datos/
+|  |-> memes.txt          (Lista de memes)
+|  |-> realidades.json    (Datos de realidades en JSON)
+|  |-> soluciones.xml     (Soluciones en XML)
+|
+|-> resultados/
+|  |-> resultados.txt     (Puntuaciones guardadas)
+|
+|-> fuentes/
+|  |-> JuegoMemes.java
+|  |-> ComprobadorFicheros.java
+|  |-> LeerFicheros.java
+|  |-> Memes.java
+|  |-> MemesRealidades.java
+|  |-> Puntuacion.java
+|  |-> Puntuaciones.java
+|
+|-> test/
+|  |-> JuegoMemesTest.java
+|  |-> ComprobadorFicherosTest.java
+|  |-> LeerFicherosTest.java
+|  |-> PuntuacionesTest.java
+|
+|-> lib/
+|  |-> json-20251224.jar
+|  |-> junit-jupiter-api-5.9.2.jar
+|  |-> junit-jupiter-engine-5.9.2.jar
+|  |-> junit-platform-console-standalone-1.9.2.jar
+|  |-> hamcrest-core-1.3.jar
+|
+|-> compilados/           (Se crea al compilar)
+|
+|-> Herramientas.txt      (Comandos detallados para desarrolladores)
+|-> ComoUsar.txt          (Este archivo)
+|-> README.md
+|-> Backlog.txt
+|-> documentacion/        (Javadoc generado)
 
----
+PRERREQUISITOS:
+========================================
+- Java JDK 25 instalado (verificar con: java --version)
+- Los archivos JAR en lib/ deben estar presentes
+- El directorio "compilados/" se creará automáticamente al compilar
 
-## 🚀 Instalación y Configuración
+COMPILACIÓN Y EJECUCIÓN:
+========================================
 
-1. **Descarga el proyecto:**
-   - Clona el repositorio o descarga el ZIP desde GitHub.
+1. COMPILAR EL PROYECTO:
+   ..\..\jdk-25\bin\javac -cp "lib/json-20251224.jar" -d compilados fuentes/*.java
 
-2. **Verifica los archivos:**
-   - Asegúrate de que `datos/memes.txt`, `datos/realidades.json` y `datos/soluciones.xml` existan.
-   - Los JARs en `lib/` deben estar presentes.
+2. EJECUTAR EL JUEGO:
+   ..\..\jdk-25\bin\java -cp "compilados;lib/json-20251224.jar" JuegoMemes
 
-3. **Compila el proyecto:**
-   - Abre una terminal en la raíz del proyecto.
-   - Ejecuta: `javac -cp "lib/json-20251224.jar" -d compilados fuentes/*.java`
+3. COMPILAR Y EJECUTAR TESTS:
+   ..\..\jdk-25\bin\javac -cp "lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar;compilados" -d compilados test/*.java
+   ..\..\jdk-25\bin\java -jar lib/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar"
 
-4. **Ejecuta el juego:**
-   - Desde la terminal: `java -cp "compilados;lib/json-20251224.jar" JuegoMemes`
+CÓMO JUGAR:
+========================================
+1. El programa verifica automáticamente que existan los archivos necesarios en datos/
+2. Elige el número de rondas (entre 5 y 10)
+3. Se muestra un meme y varias opciones de realidad
+4. Elige la opción correcta para ganar puntos
+5. Al final, se registra tu puntuación si entras en el top 3
+6. Se muestran las mejores puntuaciones
 
-**Nota para Linux/Mac:** Usa `:` en lugar de `;` en los classpath.
+FUNCIONALIDADES IMPLEMENTADAS:
+========================================
+- HU1: Comprobar existencia de archivos en datos/
+- HU2: Crear directorio y archivo de resultados
+- HU3: Leer archivo memes.txt
+- HU4: Leer archivo realidades.json
+- HU5: Mostrar meme y opciones
+- HU6: Elegir respuesta correcta
+- HU7: Mostrar marcador por ronda
+- HU8: Mostrar puntuación final
+- HU9: Registrar puntuación en top 3
+- HU10: Mostrar mejores puntuaciones y despedida
 
----
-
-## 🎮 Cómo Jugar
-
-1. **Inicio del juego:**
-   - El programa verifica automáticamente que todos los archivos necesarios estén presentes.
-   - Si falta algún archivo, el juego se detendrá con un mensaje de error.
-
-2. **Selección de rondas:**
-   - Elige el número de rondas (entre 5 y 10). Cada ronda representa un meme diferente.
-
-3. **Juego principal:**
-   - Se muestra un meme en pantalla.
-   - Aparecen varias opciones de "realidad" (una correcta, otras falsas).
-   - Elige la opción que crees que es la realidad verdadera (introduce el número correspondiente).
-
-4. **Puntuación:**
-   - Por cada respuesta correcta: +10 puntos.
-   - Por cada respuesta incorrecta: 0 puntos.
-   - Se muestra el marcador después de cada ronda.
-
-5. **Fin del juego:**
-   - Al completar todas las rondas, se muestra tu puntuación final.
-   - Si entras en el top 3, introduce tu nombre para guardar la puntuación.
-   - Se muestran las mejores puntuaciones guardadas.
-
-6. **Salida:**
-   - El juego se despide y puedes cerrar la aplicación.
-
----
-
-## 🛠️ Solución de Problemas
-
-### Problema: "Java no reconocido como comando"
-- **Solución:** Asegúrate de que Java esté en el PATH. Instala JDK y configura las variables de entorno.
-
-### Problema: "Archivo no encontrado"
-- **Solución:** Verifica que los archivos en `datos/` estén presentes y no corruptos.
-
-### Problema: "Error al compilar"
-- **Solución:** Comprueba que el JDK 25 esté instalado y que las rutas a los JARs sean correctas.
-
-### Problema: "El juego no inicia"
-- **Solución:** Asegúrate de compilar primero. Si usas IDE, configura el classpath correctamente.
-
-### Problema: "Tests fallan"
-- **Solución:** Los tests requieren JUnit. Ejecuta desde terminal con los comandos en Herramientas.txt.
-
----
-
-## 📊 Funcionalidades Implementadas
-
-- ✅ Verificación automática de archivos
-- ✅ Lectura de datos desde TXT, JSON y XML
-- ✅ Interfaz de consola intuitiva
-- ✅ Sistema de puntuación
-- ✅ Ranking persistente (top 3)
-- ✅ Tests unitarios completos (61/61 pasan)
-
----
-
-## 📞 Soporte
-
-Para más información técnica, consulta:
-- `Herramientas.txt`: Comandos detallados
-- `README.md`: Descripción general
-- `documentacion/`: Javadoc generado
-
-**Autores:** Javier, Victor, Alejandro  
-**Proyecto académico para DAW1**
-
-¡Disfruta refutando memes y aprendiendo sobre el 8M!
+NOTAS IMPORTANTES:
+========================================
+- Todos los tests pasan correctamente (61/61)
+- El proyecto usa JUnit 5 para testing
+- Los datos se almacenan en archivos de texto, JSON y XML
+- Las puntuaciones se guardan persistentemente
+- Para más detalles técnicos, consulta Herramientas.txt

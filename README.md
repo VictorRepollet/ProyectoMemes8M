@@ -7,7 +7,7 @@ Un juego por consola en el que el jugador debe identificar la realidad verdadera
 
 ## 📋 Descripción
 
-El programa carga una serie de memes junto con sus realidades (verdadera y falsas) desde ficheros de datos en distintos formatos (TXT, JSON, XML). El jugador elige el número de rondas, visualiza cada meme con sus opciones, selecciona la que considera verdadera y ve su marcador actualizado tras cada ronda. Al finalizar, se muestra la puntuación final y queda registrada en un ranking.
+El programa carga una serie de memes junto con sus realidades (verdadera y falsas) desde ficheros de datos en distintos formatos (TXT, JSON, XML). El jugador visualiza el meme y debe seleccionar cuál de las opciones presentadas corresponde a la realidad real. Al finalizar la partida, la puntuación queda registrada en un ranking.
 
 ---
 
@@ -42,17 +42,17 @@ ProyectoMemes8M/
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/VictorRepollet/ProyectoMemes8M.git
+   git clone https://github.com/VictorRepollet/ProyectoMemes8M.git
 ```
 
 2. Compila los fuentes desde la carpeta `fuentes/`:
 ```bash
-javac -cp ".;ruta/a/org.json.jar" *.java
+   javac -cp ".;ruta/a/org.json.jar" *.java
 ```
 
 3. Ejecuta el programa:
 ```bash
-java -cp ".;ruta/a/org.json.jar" JuegoMemes
+   java -cp ".;ruta/a/org.json.jar" JuegoMemes
 ```
 
 > En Linux/Mac usa `:` en lugar de `;` en el classpath.
@@ -62,12 +62,10 @@ java -cp ".;ruta/a/org.json.jar" JuegoMemes
 ## 🎮 Cómo se juega
 
 1. El programa verifica que todos los ficheros necesarios estén presentes.
-2. El jugador elige cuántas rondas quiere jugar (entre 5 y 10).
-3. En cada ronda se muestra un meme con varias opciones de realidad mezcladas.
-4. El jugador elige la opción que considera verdadera.
-5. Se muestra si ha acertado o fallado, y el marcador actualizado.
-6. Al finalizar todas las rondas, se muestra la puntuación final.
-7. El jugador introduce su nombre y la puntuación queda guardada en el ranking.
+2. Se muestra un meme con varias opciones de realidad.
+3. El jugador elige la opción que considera verdadera.
+4. Al finalizar todas las rondas, se muestra la puntuación obtenida.
+5. El jugador introduce su nombre y la puntuación queda guardada en el ranking.
 
 ---
 
@@ -77,7 +75,7 @@ java -cp ".;ruta/a/org.json.jar" JuegoMemes
 |---|---|
 | `JuegoMemes` | Punto de entrada y flujo principal del programa |
 | `ComprobadorFicheros` | Verifica la existencia de los ficheros necesarios |
-| `LeerFicheros` | Lectura, escritura de ficheros y lógica del juego |
+| `LeerFicheros` | Lectura y escritura de ficheros TXT, JSON y XML |
 | `Memes` | Modelo de datos básico de un meme |
 | `MemesRealidades` | Modelo extendido con realidad, referencias y opciones falsas |
 
@@ -92,18 +90,18 @@ java -cp ".;ruta/a/org.json.jar" JuegoMemes
 | HU3 | Leer fichero memes y generar estructura | ✅ Completada |
 | HU4 | Leer fichero realidades y generar estructura | ✅ Completada |
 | HU5 | Mostrar meme y listar realidades | ✅ Completada |
-| HU6 | Elegir dato real | ✅ Completada |
-| HU7 | Mostrar marcador | ✅ Completada |
-| HU8 | Mostrar puntuación final | ✅ Completada |
-| HU9 | Top 3 | ⏳ Pendiente |
-| HU10 | Mostrar mejores puntuaciones | ⏳ Pendiente |
+| HU6 | Elegir dato real | ✅ Completada  |
+| HU7 | Mostrar marcador | ✅ Completada  |
+| HU8 | Mostrar puntuación final | ✅ Completada  |
+| HU9 | Top 3 | ✅ Completada  |
+| HU10 | Mostrar mejores puntuaciones | ✅ Completada  |
 
 ---
 
 ## 👥 Autores
 
 - **Víctor** 
-- **Alejandro** 
+- **Alejandro**
 - **Javier** 
 
 ---
