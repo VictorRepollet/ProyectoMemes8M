@@ -103,7 +103,7 @@ public class LeerFicheros {
      * @throws Exception si ocurre un error al leer o escribir el fichero de resultados
      */
     public static void escribirPuntuaciones(Integer puntuacion, Scanner teclado) throws Exception {
-        String ruta = "../resultados/resultados.txt";
+        String ruta = "resultados/resultados.txt";
         Path path = Paths.get(ruta);
 
         System.out.println("Introduce tu nombre y quedara registrado con tu puntuacion.");

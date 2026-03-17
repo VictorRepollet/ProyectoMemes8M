@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Clase principal de la aplicación Memes 8M.
@@ -61,23 +62,34 @@ public class JuegoMemes {
             return; // si faltan ficheros, no tiene sentido continuar
         }
 
-        // 2. Cargar datos
-        // List<MemesRealidades> memes = LeerFicheros.obtenerMemesPorJson();
-        // (descomenta cuando vayas a implementar el juego)
-
-        // 3. Lógica del juego
-        // (aquí irán las HU6, HU7, HU8...)
-        int puntuacion = 0; // provisional hasta que implementes el juego
-
-        // 4. Guardar puntuación al final
+        // 2. Cargar datos (HU3 y HU4)
+        List<MemesRealidades> memes = null;
         try {
-            LeerFicheros.escribirPuntuaciones(puntuacion, teclado);
-        } catch (Exception e) {
-            System.out.println("Error al guardar puntuacion: " + e.getMessage());
+            memes = LeerFicheros.obtenerMemesPorJson();
+        } catch (IOException e) {
+            System.out.println("Error al cargar datos del juego: " + e.getMessage());
+            return;
         }
+
+        // 3. Lógica del juego (HU5, HU6, HU7)
+        int puntuacion = 0;
+
+        for (int ronda = 1; ronda <= 5; ronda++) {
+            System.out.println("\n--- Ronda " + ronda + " ---");
+            if (JuegoLogica.jugarRonda(memes, teclado)) {
+                puntuacion++;
+            }
+            // HU7: Mostrar marcador actual
+            System.out.println("Puntuación actual: " + puntuacion + "/5");
+        }
+
+        // HU8, HU9 y HU10: Verificar si entra en top 3 y mostrar mejores puntuaciones
+        Puntuaciones.verificarYRegistrarPuntuacion(puntuacion, teclado);
+        Puntuaciones.mostrarMejoresPuntuacionesYDespedida();
 
         System.out.println("================================");
         System.out.println("       TERMINANDO PROGRAMA.");
         System.out.println("================================");
+
     }
 }
