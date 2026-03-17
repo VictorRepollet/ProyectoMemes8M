@@ -3,16 +3,16 @@ RUTAS DE EJECUCIÓN - Herramientas
 ========================================
 
 COMPILAR FUENTES:
-  ..\..\jdk-25\bin\javac -d compilados fuentes/ComprobadorFicheros.java fuentes/LeerFicheros.java fuentes/Memes.java fuentes/MemesRealidades.java fuentes/JuegoMemes.java
+  javac -d compilados fuentes/*.java
 
 COMPILAR TESTS:
-  ..\..\jdk-25\bin\javac -cp "test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar;compilados" -d compilados test/java/ComprobadorFicherosTest.java
+  javac -cp "test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar;compilados" -d compilados test/*.java
 
 EJECUTAR TESTS:
-  ..\..\jdk-25\bin\java -jar test/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar"
+  java -jar test/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar"
 
 EJECUTAR PROGRAMA PRINCIPAL:
-  ..\..\jdk-25\bin\java -cp compilados JuegoMemes
+  java -cp compilados JuegoMemes
 
 ========================================
 ALTERNATIVAMENTE (desde VS Code):
@@ -20,3 +20,11 @@ ALTERNATIVAMENTE (desde VS Code):
 Presiona: Ctrl+Shift+P
 Escribe: Run Task
 Selecciona: Ejecutar tests
+
+========================================
+NOTAS:
+========================================
+- Asegúrate de que Java esté en el PATH.
+- Los JARs de JUnit deben estar en test/.
+- Para ejecutar una clase específica: java -cp compilados NombreClase
+- Para compilar un archivo individual: javac -d compilados fuentes/NombreArchivo.java
