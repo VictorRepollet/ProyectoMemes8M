@@ -1,5 +1,4 @@
-import java.io.IOException;
-import java.util.*;
+import java.util.Scanner;
 
 /**
  * Clase principal de la aplicación Memes 8M.
@@ -23,7 +22,7 @@ public class JuegoMemes {
      *
      * @param args argumentos de línea de comandos (no utilizados en esta aplicación)
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
         start(teclado);
         teclado.close(); // se cierra aquí, al final de todo
@@ -46,7 +45,7 @@ public class JuegoMemes {
      *
      * @param teclado {@link Scanner} compartido para la lectura de entrada del usuario
      */
-    public static void start(Scanner teclado) {
+    public static void start(Scanner teclado) throws Exception {
 
         System.out.println("================================");
         System.out.println("         JUEGO MEMES 8M");
@@ -62,34 +61,41 @@ public class JuegoMemes {
             return; // si faltan ficheros, no tiene sentido continuar
         }
 
-        // 2. Cargar datos (HU3 y HU4)
-        List<MemesRealidades> memes = null;
-        try {
-            memes = LeerFicheros.obtenerMemesPorJson();
-        } catch (IOException e) {
-            System.out.println("Error al cargar datos del juego: " + e.getMessage());
-            return;
-        }
+        // 2. Cargar datos
+        // List<MemesRealidades> memes = LeerFicheros.obtenerMemesPorJson();
+        // (descomenta cuando vayas a implementar el juego)
 
-        // 3. Lógica del juego (HU5, HU6, HU7)
-        int puntuacion = 0;
+        // 3. Lógica del juego(HU6 + HU7 + HU8)
+        /*
+        esa única línea cubre las tres historias de usuario porque:
+        HU6 → dentro de jugar() se cargan los memes, se muestran las opciones y se comprueba si el jugador acertó
+        HU7 → dentro de jugar() se pide el número de rondas y se muestra el marcador tras cada una
+        HU8 → dentro de jugar() se muestra la puntuación final antes de hacer el return
+         */
+        Integer puntuacion = LeerFicheros.jugar(teclado);
+        
 
-        for (int ronda = 1; ronda <= 5; ronda++) {
-            System.out.println("\n--- Ronda " + ronda + " ---");
-            if (JuegoLogica.jugarRonda(memes, teclado)) {
-                puntuacion++;
-            }
-            // HU7: Mostrar marcador actual
-            System.out.println("Puntuación actual: " + puntuacion + "/5");
-        }
-
-        // HU8, HU9 y HU10: Verificar si entra en top 3 y mostrar mejores puntuaciones
+        // 4. Guardar puntuación al final, HU9 y HU10: Verificar si entra en top 3 y mostrar mejores puntuaciones
         Puntuaciones.verificarYRegistrarPuntuacion(puntuacion, teclado);
         Puntuaciones.mostrarMejoresPuntuacionesYDespedida();
 
         System.out.println("================================");
         System.out.println("       TERMINANDO PROGRAMA.");
         System.out.println("================================");
+    }
 
+    public static boolean comprobarDatos() {
+        try {
+            ComprobadorFicheros comprobador = new ComprobadorFicheros();
+            comprobador.comprobarDatos();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static void comprobarResultados() {
+        ComprobadorFicheros comprobador = new ComprobadorFicheros();
+        comprobador.comprobarResultados();
     }
 }

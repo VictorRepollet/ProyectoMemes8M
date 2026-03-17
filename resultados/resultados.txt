@@ -1,6 +1,6 @@
-javi:2
-pedro:2
-2:2
-4. �1� - 0
-5. sss - 0
-6. ss - 0
+User1:15
+User2:12
+User3:10
+4. Jugador1 - 5
+5. Jugador2 - 8
+6. Alejandro - 7
