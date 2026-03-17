@@ -90,11 +90,11 @@ ProyectoMemes8M/
 | HU3 | Leer fichero memes y generar estructura | ✅ Completada |
 | HU4 | Leer fichero realidades y generar estructura | ✅ Completada |
 | HU5 | Mostrar meme y listar realidades | ✅ Completada |
-| HU6 | Elegir dato real | 🔄 En progreso |
-| HU7 | Mostrar marcador | ⏳ Pendiente |
-| HU8 | Mostrar puntuación final | ⏳ Pendiente |
-| HU9 | Top 3 | ⏳ Pendiente |
-| HU10 | Mostrar mejores puntuaciones | ⏳ Pendiente |
+| HU6 | Elegir dato real | ✅ Completada  |
+| HU7 | Mostrar marcador | ✅ Completada  |
+| HU8 | Mostrar puntuación final | ✅ Completada  |
+| HU9 | Top 3 | ✅ Completada  |
+| HU10 | Mostrar mejores puntuaciones | ✅ Completada  |
 
 ---
 
