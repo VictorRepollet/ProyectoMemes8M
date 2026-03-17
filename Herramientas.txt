@@ -2,29 +2,85 @@
 RUTAS DE EJECUCIÓN - Herramientas
 ========================================
 
-COMPILAR FUENTES:
-  javac -d compilados fuentes/*.java
-
-COMPILAR TESTS:
-  javac -cp "test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar;compilados" -d compilados test/*.java
-
-EJECUTAR TESTS:
-  java -jar test/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;test/junit-jupiter-api-5.9.2.jar;test/junit-jupiter-engine-5.9.2.jar;test/junit-platform-console-standalone-1.9.2.jar"
-
-EJECUTAR PROGRAMA PRINCIPAL:
-  java -cp compilados JuegoMemes
-
+RUTAS DE COMPILACIÓN:
 ========================================
-ALTERNATIVAMENTE (desde VS Code):
-========================================
-Presiona: Ctrl+Shift+P
-Escribe: Run Task
-Selecciona: Ejecutar tests
+1. COMPILACIÓN BÁSICA DE FUENTES (recommended):
+   ..\..\jdk-25\bin\javac -d compilados fuentes/*.java
 
+2. COMPILACIÓN DE FUENTES CON JSON (desde lib/):
+   ..\..\jdk-25\bin\javac -cp "lib/json-20251224.jar" -d compilados fuentes/*.java
+
+3. COMPILACIÓN DE UN ARCHIVO ESPECÍFICO:
+   ..\..\jdk-25\bin\javac -d compilados fuentes/ComprobadorFicheros.java
+   ..\..\jdk-25\bin\javac -d compilados fuentes/LeerFicheros.java
+   ..\..\jdk-25\bin\javac -d compilados fuentes/Memes.java
+   ..\..\jdk-25\bin\javac -d compilados fuentes/MemesRealidades.java
+   ..\..\jdk-25\bin\javac -d compilados fuentes/JuegoMemes.java
+   ..\..\jdk-25\bin\javac -d compilados fuentes/PuntuacionesHU9HU10.java
+
+4. COMPILACIÓN DE TESTS INDIVIDUALES:
+   ..\..\jdk-25\bin\javac -cp "lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar;compilados" -d compilados test/ComprobadorFicherosTest.java
+   ..\..\jdk-25\bin\javac -cp "lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar;compilados" -d compilados test/LeerFicherosTest.java
+   ..\..\jdk-25\bin\javac -cp "lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar;compilados" -d compilados test/PuntuacionesHU9HU10Test.java
+
+5. COMPILACIÓN DE TODOS LOS TESTS:
+   ..\..\jdk-25\bin\javac -cp "lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/junit-platform-console-standalone-1.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar;compilados" -d compilados test/*.java
+
+RUTAS DE EJECUCIÓN:
 ========================================
-NOTAS:
+1. EJECUTAR PROGRAMA PRINCIPAL (JuegoMemes):
+   ..\..\jdk-25\bin\java -cp "compilados;lib/json-20251224.jar" JuegoMemes
+
+2. EJECUTAR CLASES INDIVIDUALES:
+   ..\..\jdk-25\bin\java -cp compilados ComprobadorFicheros
+   ..\..\jdk-25\bin\java -cp compilados LeerFicheros
+   ..\..\jdk-25\bin\java -cp compilados Memes
+   ..\..\jdk-25\bin\java -cp compilados MemesRealidades
+   ..\..\jdk-25\bin\java -cp compilados PuntuacionesHU9HU10
+
+3. EJECUTAR TESTS CON JUNIT 5 (Platform Console):
+   ..\..\jdk-25\bin\java -jar lib/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar"
+
+4. EJECUTAR TEST ESPECÍFICO:
+   ..\..\jdk-25\bin\java -jar lib/junit-platform-console-standalone-1.9.2.jar -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar" --select-class ComprobadorFicherosTest
+   ..\..\jdk-25\bin\java -jar lib/junit-platform-console-standalone-1.9.2.jar -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar" --select-class LeerFicherosTest
+   ..\..\jdk-25\bin\java -jar lib/junit-platform-console-standalone-1.9.2.jar -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar" --select-class PuntuacionesHU9HU10Test
+
+5. EJECUTAR TESTS CON JUNIT 4 (alternativa):
+   ..\..\jdk-25\bin\java -cp "compilados;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar" org.junit.runner.JUnitCore ComprobadorFicherosTest
+
+6. EJECUTAR CON SALIDA DETALLADA (verbose):
+   ..\..\jdk-25\bin\java -jar lib/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar" -v
+RUTAS COMBINADAS (COMPILE + EXECUTE):
 ========================================
-- Asegúrate de que Java esté en el PATH.
-- Los JARs de JUnit deben estar en test/.
-- Para ejecutar una clase específica: java -cp compilados NombreClase
-- Para compilar un archivo individual: javac -d compilados fuentes/NombreArchivo.java
+1. Compilar y ejecutar programa principal:
+   ..\..\jdk-25\bin\javac -cp "lib/json-20251224.jar" -d compilados fuentes/*.java && ..\..\jdk-25\bin\java -cp "compilados;lib/json-20251224.jar" JuegoMemes
+
+2. Compilar y ejecutar tests:
+   ..\..\jdk-25\bin\javac -cp "lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar;compilados" -d compilados test/*.java && ..\..\jdk-25\bin\java -jar lib/junit-platform-console-standalone-1.9.2.jar --scan-classpath -cp "compilados;lib/junit-jupiter-api-5.9.2.jar;lib/junit-jupiter-engine-5.9.2.jar;lib/hamcrest-core-1.3.jar;lib/json-20251224.jar"
+
+ALTERNATIVAS DESDE VS CODE:
+========================================
+• Presiona: Ctrl+Shift+P
+• Escribe: Run Task
+• Selecciona: Ejecutar tests, Compilar fuentes, etc.
+
+RUTAS DE DIRECTORIOS IMPORTANTES:
+========================================
+• Directorios de datos: datos/memes.txt, datos/realidades.json, datos/soluciones.xml
+• Directorio de resultados: resultados/resultados.txt
+• Archivos fuentes: fuentes/
+• Archivos tests: test/
+• JARs disponibles: lib/
+• Salida compilada: compilados/
+
+NOTAS IMPORTANTES:
+========================================
+- Asegúrate de que Java esté en el PATH (java --version para verificar)
+- Los JARs deben estar en lib/
+- El directorio "compilados/" debe crearse o debe existir
+- Para compilar todo: javac -cp "lib/json-20251224.jar" -d compilados fuentes/*.java test/*.java
+- Las rutas usan ";" en Windows (usa ":" en Linux/Mac)
+- El programa principal es JuegoMemes (HU1-HU10)
+- Las clases principales son: ComprobadorFicheros, LeerFicheros, Memes, MemesRealidades, PuntuacionesHU9HU10
+- Para tests: Incluye lib/json-20251224.jar en el classpath ya que algunos tests usan JSON

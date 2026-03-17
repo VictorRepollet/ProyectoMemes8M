@@ -1,4 +1,3 @@
-package test;
 import org.junit.jupiter.api.*;
 import java.io.*;
 import java.nio.file.*;
@@ -7,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Clase de tests unitarios para verificar el correcto funcionamiento
- * de las Historias de Usuario HU1 a HU8 del proyecto Memes 8M.
+ * de las Historias de Usuario HU1 a HU10 del proyecto Memes 8M.
  *
  * Cubre las siguientes historias de usuario:
  *   HU1 - Comprobar existencia de ficheros en datos (Javier)
@@ -18,11 +17,72 @@ import static org.junit.jupiter.api.Assertions.*;
  *   HU6 - Elegir dato real (Alejandro)
  *   HU7 - Mostrar marcador (Alejandro)
  *   HU8 - Mostrar puntuación final (Alejandro)
+ *   HU9 - Verificar y registrar puntuación en top 3
+ *   HU10 - Mostrar mejores puntuaciones y despedida
  *
  * @author Alejandro, Victor, Javier
  * @version 1.0
  */
 public class JuegoMemesTest {
+
+    private static final String RUTA_RESULTADOS = "resultados/resultados.txt";
+    private static final String BACKUP_RESULTADOS = "resultados/resultados_backup.txt";
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        // Crear directorio datos si no existe
+        new File("datos").mkdirs();
+        
+        // Limpiar y crear archivo memes.txt
+        File memes = new File("datos/memes.txt");
+        memes.delete();
+        Files.writeString(memes.toPath(), "Meme1\nMeme2\nMeme3\nMeme4\nMeme5");
+        
+        // Limpiar y crear archivo realidades.json
+        File realidades = new File("datos/realidades.json");
+        realidades.delete();
+        String json = "[" +
+            "{\"id\":1,\"name_meme\":\"Meme1\",\"reality\":\"Realidad1\",\"reference\":\"Fuente1\",\"url\":\"http://url1.com\",\"fake_realities\":[\"Falsa11\",\"Falsa12\",\"Falsa13\"]}," +
+            "{\"id\":2,\"name_meme\":\"Meme2\",\"reality\":\"Realidad2\",\"reference\":\"Fuente2\",\"url\":\"http://url2.com\",\"fake_realities\":[\"Falsa21\",\"Falsa22\",\"Falsa23\"]}," +
+            "{\"id\":3,\"name_meme\":\"Meme3\",\"reality\":\"Realidad3\",\"reference\":\"Fuente3\",\"url\":\"http://url3.com\",\"fake_realities\":[\"Falsa31\",\"Falsa32\",\"Falsa33\"]}," +
+            "{\"id\":4,\"name_meme\":\"Meme4\",\"reality\":\"Realidad4\",\"reference\":\"Fuente4\",\"url\":\"http://url4.com\",\"fake_realities\":[\"Falsa41\",\"Falsa42\",\"Falsa43\"]}," +
+            "{\"id\":5,\"name_meme\":\"Meme5\",\"reality\":\"Realidad5\",\"reference\":\"Fuente5\",\"url\":\"http://url5.com\",\"fake_realities\":[\"Falsa51\",\"Falsa52\",\"Falsa53\"]}" +
+            "]";
+        Files.writeString(realidades.toPath(), json);
+        
+        // Limpiar y crear archivo soluciones.xml
+        File soluciones = new File("datos/soluciones.xml");
+        soluciones.delete();
+        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<memes>\n" +
+            "  <meme>\n" +
+            "    <id>1</id>\n" +
+            "    <nombre>Meme1</nombre>\n" +
+            "    <realidad>Realidad1</realidad>\n" +
+            "  </meme>\n" +
+            "  <meme>\n" +
+            "    <id>2</id>\n" +
+            "    <nombre>Meme2</nombre>\n" +
+            "    <realidad>Realidad2</realidad>\n" +
+            "  </meme>\n" +
+            "  <meme>\n" +
+            "    <id>3</id>\n" +
+            "    <nombre>Meme3</nombre>\n" +
+            "    <realidad>Realidad3</realidad>\n" +
+            "  </meme>\n" +
+            "  <meme>\n" +
+            "    <id>4</id>\n" +
+            "    <nombre>Meme4</nombre>\n" +
+            "    <realidad>Realidad4</realidad>\n" +
+            "  </meme>\n" +
+            "  <meme>\n" +
+            "    <id>5</id>\n" +
+            "    <nombre>Meme5</nombre>\n" +
+            "    <realidad>Realidad5</realidad>\n" +
+            "  </meme>\n" +
+            "</memes>";
+        Files.writeString(soluciones.toPath(), xml);
+    }
 
     // =========================================================
     // HU1 - COMPROBAR EXISTENCIA DE FICHEROS EN DATOS (JAVIER)
@@ -141,12 +201,11 @@ public class JuegoMemesTest {
      * devuelve una lista con al menos un elemento.
      */
     @Test
-    public void testLeerTXT_DevuelveListaNoVacia() throws IOException {
+    public void testLeerTXT_DevuelveListaNoVacia() throws Exception {
         new File("datos").mkdirs();
         Files.writeString(Paths.get("datos/memes.txt"), "Meme1\nMeme2\nMeme3");
 
-        LeerFicheros lector = new LeerFicheros();
-        List<String> memes = lector.leerTXT();
+        List<String> memes = LeerFicheros.leerFichero("datos/memes.txt");
 
         assertFalse(memes.isEmpty());
     }
@@ -156,12 +215,11 @@ public class JuegoMemesTest {
      * coincide con el número de líneas del fichero memes.txt.
      */
     @Test
-    public void testLeerTXT_NumeroCorrecto() throws IOException {
+    public void testLeerTXT_NumeroCorrecto() throws Exception {
         new File("datos").mkdirs();
         Files.writeString(Paths.get("datos/memes.txt"), "Meme1\nMeme2\nMeme3");
 
-        LeerFicheros lector = new LeerFicheros();
-        List<String> memes = lector.leerTXT();
+        List<String> memes = LeerFicheros.leerFichero("datos/memes.txt");
 
         assertEquals(3, memes.size());
     }
@@ -174,9 +232,7 @@ public class JuegoMemesTest {
     public void testLeerTXT_FicheroNoExisteLanzaExcepcion() {
         new File("datos/memes.txt").delete();
 
-        LeerFicheros lector = new LeerFicheros();
-
-        assertThrows(IOException.class, () -> lector.leerTXT());
+        assertThrows(Exception.class, () -> LeerFicheros.leerFichero("datos/memes.txt"));
     }
 
 
@@ -194,7 +250,7 @@ public class JuegoMemesTest {
         String json = "[{\"id\":1,\"name_meme\":\"Meme test\",\"reality\":\"Realidad test\"," +
                       "\"reference\":\"Fuente test\",\"url\":\"http://test.com\"," +
                       "\"fake_realities\":[\"Falsa 1\",\"Falsa 2\"]}]";
-        Files.writeString(Paths.get("../datos/realidades.json"), json);
+        Files.writeString(Paths.get("datos/realidades.json"), json);
 
         LeerFicheros lector = new LeerFicheros();
         List<MemesRealidades> lista = lector.obtenerMemesPorJson();
@@ -208,10 +264,11 @@ public class JuegoMemesTest {
      */
     @Test
     public void testObtenerMemesPorJson_CamposCargadosCorrectamente() throws Exception {
-        String json = "[{\"id\":1,\"name_meme\":\"Meme test\",\"reality\":\"Realidad test\"," +
-                      "\"reference\":\"Fuente test\",\"url\":\"http://test.com\"," +
-                      "\"fake_realities\":[\"Falsa 1\",\"Falsa 2\"]}]";
-        Files.writeString(Paths.get("../datos/realidades.json"), json);
+        new File("datos").mkdirs();
+        String json = "[{\"id\":1,\"name_meme\":\"Meme test\",\"reality\":\"Realidad test\"" +
+                      ",\"reference\":\"Fuente test\",\"url\":\"http://test.com\"" +
+                      ",\"fake_realities\":[\"Falsa 1\",\"Falsa 2\"]}]";
+        Files.writeString(Paths.get("datos/realidades.json"), json);
 
         LeerFicheros lector = new LeerFicheros();
         List<MemesRealidades> lista = lector.obtenerMemesPorJson();
@@ -226,7 +283,8 @@ public class JuegoMemesTest {
      */
     @Test
     public void testObtenerMemesPorJson_JsonVacioDevuelveListaVacia() throws Exception {
-        Files.writeString(Paths.get("../datos/realidades.json"), "[]");
+        new File("datos").mkdirs();
+        Files.writeString(Paths.get("datos/realidades.json"), "[]");
 
         LeerFicheros lector = new LeerFicheros();
         List<MemesRealidades> lista = lector.obtenerMemesPorJson();
@@ -457,6 +515,127 @@ public class JuegoMemesTest {
         Integer puntuacion = LeerFicheros.jugar(teclado);
 
         assertNotNull(puntuacion);
+    }
+
+    // =========================================================
+    // HU9 - VERIFICAR Y REGISTRAR PUNTUACIÓN EN TOP 3
+    // =========================================================
+
+    /**
+     * HU9 - Test 1: Comprueba que cuando una puntuación entra en el top 3,
+     * se pide el nombre al usuario y se registra correctamente.
+     */
+    @Test
+    public void testVerificarYRegistrarPuntuacion_EntraEnTop3() {
+        // Preparar entrada simulada con nombre
+        String input = "TestUser\n";
+        Scanner scanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
+
+        // Llamar al método con puntuación alta
+        Puntuaciones.verificarYRegistrarPuntuacion(10, scanner);
+
+        // Verificar que se guardó en el archivo
+        try {
+            List<String> lineas = Files.readAllLines(Paths.get(RUTA_RESULTADOS));
+            assertEquals(1, lineas.size());
+            assertTrue(lineas.get(0).contains("TestUser"));
+            assertTrue(lineas.get(0).contains("10"));
+        } catch (IOException e) {
+            fail("Error al leer archivo");
+        }
+    }
+
+    /**
+     * HU9 - Test 2: Comprueba que cuando una puntuación no entra en el top 3,
+     * no se pide nombre ni se modifica el archivo.
+     */
+    @Test
+    public void testVerificarYRegistrarPuntuacion_NoEntraEnTop3() {
+        try {
+            // Preparar archivo con top 3 mejores
+            List<String> inicial = Arrays.asList("User1:15", "User2:12", "User3:10");
+            Files.write(Paths.get(RUTA_RESULTADOS), inicial);
+
+            // Preparar entrada simulada (no debería usarse)
+            String input = "";
+            Scanner scanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
+
+            // Llamar al método con puntuación baja
+            Puntuaciones.verificarYRegistrarPuntuacion(5, scanner);
+
+            // Verificar que el archivo no cambió
+            List<String> lineas = Files.readAllLines(Paths.get(RUTA_RESULTADOS));
+            assertEquals(3, lineas.size());
+            assertTrue(lineas.contains("User1:15"));
+        } catch (IOException e) {
+            fail("Error en manejo de archivos");
+        }
+    }
+
+
+    // =========================================================
+    // HU10 - MOSTRAR MEJORES PUNTUACIONES Y DESPEDIDA
+    // =========================================================
+
+    /**
+     * HU10 - Test 1: Comprueba que se muestran las mejores puntuaciones
+     * cuando hay registros en el archivo.
+     */
+    @Test
+    public void testMostrarMejoresPuntuacionesYDespedida_ConPuntuaciones() {
+        try {
+            // Preparar archivo con puntuaciones
+            List<String> inicial = Arrays.asList("User1:15", "User2:12", "User3:10");
+            Files.write(Paths.get(RUTA_RESULTADOS), inicial);
+
+            // Capturar salida
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+
+            // Llamar al método
+            Puntuaciones.mostrarMejoresPuntuacionesYDespedida();
+
+            // Restaurar salida
+            System.setOut(System.out);
+
+            String output = outContent.toString();
+            assertTrue(output.contains("Mejores puntuaciones:"));
+            assertTrue(output.contains("1. User1 - 15 puntos"));
+            assertTrue(output.contains("2. User2 - 12 puntos"));
+            assertTrue(output.contains("3. User3 - 10 puntos"));
+            assertTrue(output.contains("¡Gracias por jugar!"));
+        } catch (IOException e) {
+            fail("Error en manejo de archivos");
+        }
+    }
+
+    /**
+     * HU10 - Test 2: Comprueba que se muestra un mensaje adecuado
+     * cuando no hay puntuaciones registradas.
+     */
+    @Test
+    public void testMostrarMejoresPuntuacionesYDespedida_SinPuntuaciones() {
+        try {
+            // Archivo vacío
+            new File("resultados").mkdirs();
+            Files.write(Paths.get(RUTA_RESULTADOS), Collections.emptyList());
+
+            // Capturar salida
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+
+            // Llamar al método
+            Puntuaciones.mostrarMejoresPuntuacionesYDespedida();
+
+            // Restaurar salida
+            System.setOut(System.out);
+
+            String output = outContent.toString();
+            assertTrue(output.contains("No hay puntuaciones registradas aún."));
+            assertTrue(output.contains("¡Gracias por jugar!"));
+        } catch (IOException e) {
+            fail("Error en manejo de archivos");
+        }
     }
 
 
